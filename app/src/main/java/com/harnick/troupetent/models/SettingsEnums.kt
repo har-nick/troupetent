@@ -11,20 +11,20 @@ class SettingsEnums {
 	OGG("Ogg Vorbis"),
 	WAV("WAV"),
   }
-  
+
   enum class Languages(val nativeName: String) {
 	ENG("English"),
   }
-  
+
   //TODO: SET UP CUSTOM PFP SUPPORT
   enum class ProfilePictureSource(val displayName: String) {
 	BANDCAMP("Use Bandcamp default"),
-	
+
 	//	CUSTOM("Use a custom profile picture"),
-	
+
 	NONE("Disabled"),
   }
-  
+
   enum class SyncIntervals(val displayName: String) {
 	H1("Every hour"),
 	H6("Every six hours"),
@@ -32,7 +32,7 @@ class SettingsEnums {
 	D1("Daily"),
 	W1("Weekly"),
   }
-  
+
   enum class Themes(val displayName: String) {
 	SYSTEM("Follow system theme"),
 	LIGHT("Light Mode"),

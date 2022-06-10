@@ -12,7 +12,7 @@ object GenericUtils {
 	  }
 	}
   }
-  
+
   fun isEnum(type: KClass<out Any>): Boolean {
 	return type.supertypes.any { t ->
 	  (t.classifier as KClass<out Any>).qualifiedName == "kotlin.Enum"
