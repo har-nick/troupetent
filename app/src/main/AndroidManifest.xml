@@ -3,11 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.harnick.troupetent">
 
-    <uses-sdk tools:overrideLibrary="androidx.security" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -19,16 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Troupetent"
         tools:targetApi="31">
-
-        <meta-data
-            android:name="android.webkit.WebView.EnableSafeBrowsing"
-            android:value="false" />
-        <meta-data
-            android:name="android.webkit.WebView.MetricsOptOut"
-            android:value="true" />
-
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Troupetent">
             <intent-filter>
