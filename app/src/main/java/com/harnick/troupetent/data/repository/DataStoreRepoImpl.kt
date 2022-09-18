@@ -16,29 +16,29 @@ private val Context.dataStore by dataStore("app-settings.json", AppSettingsSeria
 class DataStoreRepoImpl @Inject constructor(
 	@ApplicationContext private val appContext: Context
 ) : DataStoreRepo {
-
+	
 	override fun getSettings(): Flow<AppSettings> {
 		return appContext.dataStore.data
 	}
-
+	
 	override suspend fun setLanguage(language: Language) {
 		appContext.dataStore.updateData {
 			it.copy(displayLanguage = language)
 		}
 	}
-
+	
 	override suspend fun setAppTheme(appTheme: AppTheme) {
 		appContext.dataStore.updateData {
 			it.copy(appTheme = appTheme)
 		}
 	}
-
+	
 	override suspend fun setOfflineMode(offlineMode: Boolean) {
 		appContext.dataStore.updateData {
 			it.copy(offlineMode = offlineMode)
 		}
 	}
-
+	
 	override suspend fun setDataSaverMode(dataSaverMode: Boolean) {
 		appContext.dataStore.updateData {
 			it.copy(dataSaverMode = dataSaverMode)

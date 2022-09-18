@@ -29,29 +29,29 @@ class PlayerViewModel @Inject constructor(
 		)
 	)
 		private set
-
+	
 	private val _uiEvent = Channel<PlayerEvent>()
 	val uiEvent = _uiEvent.receiveAsFlow()
-
+	
 	init {
 		createStreamableTrackList()
 	}
-
+	
 	private fun createStreamableTrackList() {
 		val rawTrackList = state.bandcampCollectionItemTrackList
 		val streamableBandcampCollectionItemTrackList = mutableListOf<BandcampCollectionItemTrack>()
-
+		
 		viewModelScope.launch {
 			rawTrackList.forEach { rawTrack ->
 				launch {
 					val newTrackUrl = playerUseCases.getBandcampStreamUrl(rawTrack.streamUrl)
-
+					
 					streamableBandcampCollectionItemTrackList.add(
 						rawTrackList.indexOf(rawTrack),
 						rawTrack.copy(streamUrl = newTrackUrl)
 					)
 				}.join()
-
+				
 				state = state.copy(
 					bandcampCollectionItemTrackList = streamableBandcampCollectionItemTrackList.toImmutableList(),
 					buffering = false
@@ -59,17 +59,17 @@ class PlayerViewModel @Inject constructor(
 			}
 		}
 	}
-
-
+	
+	
 	private fun sendEvent(event: PlayerEvent) {
 		viewModelScope.launch {
 			_uiEvent.send(event)
 		}
 	}
-
+	
 	fun onEvent(event: PlayerEvent) {
 		when (event) {
-
+			
 			else -> {}
 		}
 	}

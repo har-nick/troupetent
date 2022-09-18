@@ -25,36 +25,35 @@ import com.harnick.troupetent.common.util.AppConstants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PlayerService : MediaBrowserServiceCompat() {
 	companion object {
 		private const val TAG = "MediaPlayerService"
-
+		
 		var currentDuration: Long = 0
 			private set
 	}
-
+	
 	inner class PlayerNotificationListener : PlayerNotificationManager.NotificationListener {
 		override fun onNotificationCancelled(
 			notificationId: Int,
 			dismissedByUser: Boolean
 		) {
 			super.onNotificationCancelled(notificationId, dismissedByUser)
-
+			
 			stopForeground(true)
 			isForegroundService = false
 			stopSelf()
 		}
-
+		
 		override fun onNotificationPosted(
 			notificationId: Int,
 			notification: Notification,
 			ongoing: Boolean
 		) {
 			super.onNotificationPosted(notificationId, notification, ongoing)
-
+			
 			if (ongoing && !isForegroundService) {
 				ContextCompat.startForegroundService(
 					applicationContext,
@@ -71,17 +70,17 @@ class PlayerService : MediaBrowserServiceCompat() {
 			}
 		}
 	}
-
+	
 	private inner class PlayerEventListener : Player.Listener {
 		override fun onEvents(player: Player, events: Player.Events) {
 			super.onEvents(player, events)
-
+			
 			currentDuration = player.duration
 		}
-
+		
 		override fun onPlaybackStateChanged(playbackState: Int) {
 			super.onPlaybackStateChanged(playbackState)
-
+			
 			when (playbackState) {
 				Player.STATE_BUFFERING,
 				Player.STATE_READY -> {
@@ -91,22 +90,22 @@ class PlayerService : MediaBrowserServiceCompat() {
 					mediaPlayerNotificationManager.hideNotification()
 				}
 			}
-
+			
 		}
-
+		
 		override fun onPlayerError(error: PlaybackException) {
 			super.onPlayerError(error)
-
+			
 			var message = "Troupetent failed somehow. Sorry!"
-
+			
 			if (error.errorCode == PlaybackException.ERROR_CODE_IO_BAD_HTTP_STATUS) {
 				message = "Couldn't fetch song!"
 			}
-
+			
 			Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
 		}
 	}
-
+	
 	inner class AudioMediaPlayBackPreparer : MediaSessionConnector.PlaybackPreparer {
 		override fun onCommand(
 			player: Player,
@@ -116,12 +115,12 @@ class PlayerService : MediaBrowserServiceCompat() {
 		): Boolean {
 			return false
 		}
-
+		
 		override fun getSupportedPrepareActions(): Long =
 			PlaybackStateCompat.ACTION_PREPARE_FROM_MEDIA_ID or PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID
-
+		
 		override fun onPrepare(playWhenReady: Boolean) = Unit
-
+		
 		override fun onPrepareFromMediaId(
 			mediaId: String,
 			playWhenReady: Boolean,
@@ -131,9 +130,9 @@ class PlayerService : MediaBrowserServiceCompat() {
 				val itemToPlay = mediaSource.audioMetadata.find {
 					it.description.mediaId == mediaId
 				}
-
+				
 				currentPlayingMedia = itemToPlay
-
+				
 				preparePlayer(
 					mediaSource.audioMetadata,
 					itemToPlay,
@@ -141,20 +140,20 @@ class PlayerService : MediaBrowserServiceCompat() {
 				)
 			}
 		}
-
+		
 		override fun onPrepareFromSearch(
 			query: String,
 			playWhenReady: Boolean,
 			extras: Bundle?
 		) = Unit
-
+		
 		override fun onPrepareFromUri(
 			uri: Uri,
 			playWhenReady: Boolean,
 			extras: Bundle?
 		) = Unit
 	}
-
+	
 	inner class MediaQueueNavigator(
 		mediaSessionCompat: MediaSessionCompat
 	) : TimelineQueueNavigator(mediaSessionCompat) {
@@ -165,25 +164,25 @@ class PlayerService : MediaBrowserServiceCompat() {
 			if (windowIndex < mediaSource.audioMetadata.size) {
 				return mediaSource.audioMetadata[windowIndex].description
 			}
-
+			
 			return MediaDescriptionCompat.Builder().build()
 		}
 	}
-
+	
 	@Inject
 	lateinit var dataSourceFactory: CacheDataSource.Factory
-
+	
 	@Inject
 	lateinit var exoPlayer: ExoPlayer
-
+	
 	@Inject
 	lateinit var mediaSource: MediaSource
-
+	
 	private val serviceJob = SupervisorJob()
 	private val serviceScope = CoroutineScope(
 		Dispatchers.Main + serviceJob
 	)
-
+	
 	private fun preparePlayer(
 		mediaMetadata: List<MediaMetadataCompat>,
 		itemToPlay: MediaMetadataCompat?,
@@ -191,29 +190,29 @@ class PlayerService : MediaBrowserServiceCompat() {
 	) {
 		val indexToPlay = if (currentPlayingMedia == null) 0
 		else mediaMetadata.indexOf(itemToPlay)
-
+		
 		exoPlayer.addListener(PlayerEventListener())
 		exoPlayer.setMediaSource(mediaSource.asMediaSource(dataSourceFactory))
 		exoPlayer.prepare()
 		exoPlayer.seekTo(indexToPlay, 0)
 		exoPlayer.playWhenReady = playWhenReady
 	}
-
+	
 	private lateinit var mediaSession: MediaSessionCompat
-
+	
 	private lateinit var mediaSessionConnector: MediaSessionConnector
-
+	
 	private lateinit var mediaPlayerNotificationManager: NotificationManager
-
+	
 	private var currentPlayingMedia: MediaMetadataCompat? = null
-
+	
 	private val isPlayerInitialised = false
-
+	
 	var isForegroundService: Boolean = false
-
+	
 	override fun onCreate() {
 		super.onCreate()
-
+		
 		val sessionActivityIntent = packageManager
 			?.getLaunchIntentForPackage(packageName)
 			?.let { sessionIntent ->
@@ -225,14 +224,14 @@ class PlayerService : MediaBrowserServiceCompat() {
 									PendingIntent.FLAG_IMMUTABLE
 				)
 			}
-
+		
 		mediaSession = MediaSessionCompat(this, TAG).apply {
 			setSessionActivity(sessionActivityIntent)
 			isActive = true
 		}
-
+		
 		sessionToken = mediaSession.sessionToken
-
+		
 		mediaPlayerNotificationManager = NotificationManager(
 			this,
 			mediaSession.sessionToken,
@@ -242,16 +241,16 @@ class PlayerService : MediaBrowserServiceCompat() {
 //		serviceScope.launch {
 //			mediaSource.load()
 //		}
-
+		
 		mediaSessionConnector = MediaSessionConnector(mediaSession).apply {
 			setPlaybackPreparer(AudioMediaPlayBackPreparer())
 			setQueueNavigator(MediaQueueNavigator(mediaSession))
 			setPlayer(exoPlayer)
 		}
-
+		
 		mediaPlayerNotificationManager.showNotification(exoPlayer)
 	}
-
+	
 	override fun onGetRoot(
 		clientPackageName: String,
 		clientUid: Int,
@@ -262,7 +261,7 @@ class PlayerService : MediaBrowserServiceCompat() {
 			null
 		)
 	}
-
+	
 	override fun onLoadChildren(
 		parentId: String,
 		result: Result<MutableList<MediaBrowserCompat.MediaItem>>
@@ -276,7 +275,7 @@ class PlayerService : MediaBrowserServiceCompat() {
 						result.sendResult(null)
 					}
 				}
-
+				
 				if (!resultSent) {
 					result.detach()
 				}
@@ -284,16 +283,16 @@ class PlayerService : MediaBrowserServiceCompat() {
 			else -> Unit
 		}
 	}
-
+	
 	override fun onCustomAction(
 		action: String,
 		extras: Bundle?, result:
 		Result<Bundle>
 	) {
 		super.onCustomAction(action, extras, result)
-
+		
 		when (action) {
-
+		
 		}
 	}
 }

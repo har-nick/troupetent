@@ -11,13 +11,13 @@ class SaveBandcampLoginTokenUseCase @Inject constructor(
 ) {
 	operator fun invoke(path: File, token: String) = flow<Resource<Unit>> {
 		emit(Resource.Saving())
-
+		
 		try {
 			encRepo.encryptData(
 				path,
 				token
 			)
-
+			
 			emit(Resource.Success())
 		} catch (e: Exception) {
 			emit(Resource.Error("Could not save token: ${e.message}"))

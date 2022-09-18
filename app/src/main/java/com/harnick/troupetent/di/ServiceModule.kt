@@ -20,7 +20,7 @@ import java.io.File
 @Module
 @InstallIn(ServiceComponent::class)
 object ServiceModule {
-
+	
 	@Provides
 	@ServiceScoped
 	fun provideAudioAttributes(): AudioAttributes =
@@ -28,7 +28,7 @@ object ServiceModule {
 			.setContentType((C.AUDIO_CONTENT_TYPE_MUSIC))
 			.setUsage(C.USAGE_MEDIA)
 			.build()
-
+	
 	@Provides
 	@ServiceScoped
 	fun provideExoplayer(
@@ -40,7 +40,7 @@ object ServiceModule {
 			setAudioAttributes(audioAttributes, true)
 			setHandleAudioBecomingNoisy(true)
 		}
-
+	
 	@Provides
 	@ServiceScoped
 	fun provideCacheDataSourceFactory(
@@ -50,13 +50,13 @@ object ServiceModule {
 		val cacheDir = File(appContext.cacheDir, "bandcamp-music")
 		val dbProvider = StandaloneDatabaseProvider(appContext)
 		val cache = SimpleCache(cacheDir, NoOpCacheEvictor(), dbProvider)
-
+		
 		return CacheDataSource.Factory().apply {
 			setCache(cache)
 			setUpstreamDataSourceFactory(httpDataSource)
 		}
 	}
-
+	
 	@Provides
 	@ServiceScoped
 	fun provideHttpDataSourceFactory() = DefaultHttpDataSource.Factory()

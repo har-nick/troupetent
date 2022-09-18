@@ -22,34 +22,34 @@ class GetBandcampCollectionSummaryUseCase @Inject constructor(
 ) {
 	operator fun invoke() = flow {
 		lateinit var hoistedResponseBody: String
-
+		
 		try {
 			emit(Resource.Fetching())
-
+			
 			val response = api.fetchCollectionSummary()
-
+			
 			hoistedResponseBody = response.bodyAsText()
-
+			
 			val serializedSummary: CollectionSummaryResponseEntity =
 				Json.decodeFromString(hoistedResponseBody)
-
+			
 			emit(Resource.Success(serializedSummary.collectionSummaryEntity.toBandcampCollectionSummary()))
 		} catch (e: SerializationException) {
 			val serializedError: ErrorResponseEntity =
 				Json.decodeFromString(hoistedResponseBody)
-
+			
 			emit(Resource.Error(serializedError.errorMessage))
 		} catch (e: Exception) {
 			emit(Resource.Loading())
 			val cachedSummaryUri = java.io.File(appContext.cacheDir, "summary.json")
-
+			
 			if (!cachedSummaryUri.isFile) {
 				throw SyncRequiredException
 			}
-
+			
 			val serializedSummaryCache: BandcampCollectionSummary =
 				Json.decodeFromString(cachedSummaryUri.readText())
-
+			
 			emit(Resource.Success(serializedSummaryCache))
 		} catch (e: SyncRequiredException) {
 			emit(Resource.Error("No cached files available"))

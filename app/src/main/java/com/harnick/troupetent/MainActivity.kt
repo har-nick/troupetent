@@ -20,25 +20,25 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
+	
 	@Inject
 	lateinit var dataStoreRepo: DataStoreRepo
-
+	
 	@Inject
 	lateinit var encRepo: EncRepo
-
+	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-
+		
 		WindowCompat.setDecorFitsSystemWindows(window, false)
-
+		
 		setContent {
 			val appSettings = dataStoreRepo
 				.getSettings()
 				.collectAsState(
 					AppSettings()
 				).value
-
+			
 			val isLoggedIn = try {
 				encRepo.decryptData(
 					File(applicationContext.dataDir, "bandcamp_token_enc")
@@ -46,9 +46,9 @@ class MainActivity : ComponentActivity() {
 			} catch (e: IOException) {
 				false
 			}
-
+			
 			val startRoute = if (isLoggedIn) LibraryScreenDestination else LoginScreenDestination
-
+			
 			TroupetentTheme(appSettings.appTheme) {
 				DestinationsNavHost(navGraph = NavGraphs.root, startRoute = startRoute)
 			}

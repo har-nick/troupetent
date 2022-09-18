@@ -31,7 +31,7 @@ enum class Language(val displayName: String) {
 
 @Serializable
 enum class ProfilePicture(val displayName: String) {
-//	CUSTOM("Display a custom profile picture"),
+	//	CUSTOM("Display a custom profile picture"),
 	DEFAULT("Use your Bandcamp profile picture"),
 	NONE("Do not display a profile picture")
 }

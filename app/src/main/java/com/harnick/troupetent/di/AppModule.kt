@@ -32,7 +32,7 @@ object AppModule {
 			.newBuilder()
 			.build()
 	}
-
+	
 	@Provides
 	@Singleton
 	fun provideLibraryUseCases(
@@ -45,7 +45,7 @@ object AppModule {
 			GetBandcampUserDataUseCase(api, appContext)
 		)
 	}
-
+	
 	@Provides
 	@Singleton
 	fun provideKtorClient(): HttpClient {
@@ -55,7 +55,7 @@ object AppModule {
 			}
 		}
 	}
-
+	
 	@Provides
 	@Singleton
 	fun provideLoginUseCases(
@@ -65,7 +65,7 @@ object AppModule {
 			SaveBandcampLoginTokenUseCase(encRepo)
 		)
 	}
-
+	
 	@Provides
 	@Singleton
 	fun providePlayerUseCases(

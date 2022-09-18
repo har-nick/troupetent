@@ -18,7 +18,7 @@ abstract class Bindings {
 	abstract fun bindDataStoreRepo(
 		dataStoreRepoImpl: DataStoreRepoImpl
 	): DataStoreRepo
-
+	
 	@Binds
 	@Singleton
 	abstract fun bindEncRepo(

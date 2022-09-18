@@ -32,7 +32,7 @@ fun LoginScreen(
 ) {
 	val context = LocalContext.current
 	val loginState = loginViewModel.state
-
+	
 	LaunchedEffect(true) {
 		loginViewModel.uiEvent.collect { event ->
 			when (event) {
@@ -41,21 +41,21 @@ fun LoginScreen(
 						this.data = Uri.fromParts("package", "com.harnick.troupetent", null)
 						this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 					}
-
+					
 					context.startActivity(openLinkIntent)
 				}
-
+				
 				LoginEvent.OpenWebView -> {}
-
+				
 				is LoginEvent.TokenFound -> {}
-
+				
 				is LoginEvent.TokenSaved -> {
 					navigator.navigate(LibraryScreenDestination)
 				}
 			}
 		}
 	}
-
+	
 	Surface(
 		Modifier
 			.fillMaxSize()
@@ -69,24 +69,24 @@ fun LoginScreen(
 			if (loginState.webViewEnabled) {
 				BandcampWebview()
 			}
-
+			
 			Text(
 				"Before logging in, make sure Troupetent can open verification links.",
 				Modifier.padding(15.dp, 0.dp),
 				textAlign = TextAlign.Center,
 				style = MaterialTheme.typography.bodyLarge
 			)
-
+			
 			Spacer(Modifier.height(15.dp))
-
+			
 			OnboardingButton(
 				{ loginViewModel.onEvent(LoginEvent.OpenDefaultLinks) },
 				"Open Supported Links",
 				!loginState.canOpenLinks
 			)
-
+			
 			Spacer(Modifier.height(10.dp))
-
+			
 			OnboardingButton(
 				onClick = {
 					loginViewModel.onEvent(LoginEvent.OpenWebView)

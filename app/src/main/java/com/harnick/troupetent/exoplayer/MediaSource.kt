@@ -13,14 +13,14 @@ import com.harnick.troupetent.exoplayer.AudioSourceStateEnums.*
 
 // TODO: METADATA_KEY_ART w/ Coil
 
-class MediaSource() {
+class MediaSource {
 	private val onReadyListeners = mutableListOf<OnReadyListener>()
-
+	
 	private val isReady: Boolean
 		get() = state == INITIALISED
-
+	
 	var audioMetadata: List<MediaMetadataCompat> = emptyList()
-
+	
 	private var state: AudioSourceStateEnums = CREATED
 		set(value) {
 			if (value == CREATED || value == ERROR) {
@@ -34,7 +34,7 @@ class MediaSource() {
 				field = value
 			}
 		}
-
+	
 	fun whenReady(listener: OnReadyListener): Boolean {
 		return if (state == CREATED || state == INITIALISED) {
 			onReadyListeners += listener
@@ -44,12 +44,12 @@ class MediaSource() {
 			true
 		}
 	}
-
+	
 	fun load(
 		track: BandcampCollectionItemTrack
 	) {
 		state = INITIALISING
-
+		
 		audioMetadata = listOf(
 			MediaMetadataCompat.Builder()
 				.putString(
@@ -70,40 +70,40 @@ class MediaSource() {
 				)
 				.build()
 		)
-
+		
 		state = INITIALISED
 	}
-
+	
 	fun asMediaSource(
 		dataSource: CacheDataSource.Factory
 	): ConcatenatingMediaSource {
 		val concatenatingMediaSource = ConcatenatingMediaSource()
-
+		
 		audioMetadata.forEach { metadata ->
 			val mediaItem = MediaItem.fromUri(
 				MediaMetadataCompat.METADATA_KEY_MEDIA_URI
 			)
-
+			
 			val mediaSource = ProgressiveMediaSource
 				.Factory(dataSource)
 				.createMediaSource(mediaItem)
-
+			
 			concatenatingMediaSource.addMediaSource(mediaSource)
 		}
-
+		
 		return concatenatingMediaSource
 	}
-
+	
 	fun asMediaItem() = audioMetadata.map { metadata ->
 		val descrption = MediaDescriptionCompat.Builder()
 			.setTitle(metadata.description.title)
 			.setMediaId(metadata.description.mediaId)
 			.setMediaUri(metadata.description.mediaUri)
 			.build()
-
+		
 		MediaBrowserCompat.MediaItem(descrption, FLAG_PLAYABLE)
 	}.toMutableList()
-
+	
 	fun refresh() {
 		onReadyListeners.clear()
 		state = CREATED

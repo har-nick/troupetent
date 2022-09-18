@@ -11,7 +11,7 @@ class GetBandcampLoginTokenUseCase @Inject constructor(
 ) {
 	operator fun invoke(path: File) = flow<Resource<String>> {
 		emit(Resource.Loading())
-
+		
 		try {
 			encRepo.decryptData(path)
 		} catch (e: Exception) {

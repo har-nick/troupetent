@@ -27,7 +27,7 @@ fun PlayerScreen(
 ) {
 	val playerState = playerViewModel.state
 	val context = LocalContext.current
-
+	
 	LaunchedEffect(true) {
 		playerViewModel.uiEvent.collect { event ->
 			when (event) {
@@ -35,7 +35,7 @@ fun PlayerScreen(
 			}
 		}
 	}
-
+	
 	Surface(
 		Modifier
 			.fillMaxSize()

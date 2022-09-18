@@ -26,26 +26,26 @@ class LibraryViewModel @Inject constructor(
 ) : ViewModel() {
 	var state by mutableStateOf(LibraryState())
 		private set
-
+	
 	private val _uiEvent = Channel<LibraryEvent>()
 	val uiEvent = _uiEvent.receiveAsFlow()
-
+	
 	init {
 		loadSummary()
 	}
-
+	
 	private fun sendEvent(event: LibraryEvent) {
 		viewModelScope.launch {
 			_uiEvent.send(event)
 		}
 	}
-
+	
 	fun onEvent(event: LibraryEvent) {
 		when (event) {
 			is ItemSelected -> {
 				val trackList =
 					state.bandcampLibraryData?.itemBandcampCollectionItemTrackLists?.get(event.bandcampCollectionItem.itemId.toString())
-
+				
 				if (trackList.isNullOrEmpty()) {
 					state = state.copy(
 						snackbarText = "Tracklist couldn't be found. Try resyncing?.",
@@ -63,13 +63,13 @@ class LibraryViewModel @Inject constructor(
 			else -> {}
 		}
 	}
-
+	
 	private fun showSnackbar() {
 		viewModelScope.launch {
 			state.snackbarState.showSnackbar(state.snackbarText!!)
 		}
 	}
-
+	
 	private fun loadSummary() {
 		libraryUseCases.getBandcampCollectionSummaryUseCase().onEach { emission ->
 			when (emission) {
@@ -99,7 +99,7 @@ class LibraryViewModel @Inject constructor(
 			}
 		}.launchIn(viewModelScope)
 	}
-
+	
 	private fun loadLibraryData(summary: BandcampCollectionSummary) {
 		libraryUseCases.getBandcampCollectionItemsUseCase(summary).onEach { emission ->
 			when (emission) {
@@ -129,7 +129,7 @@ class LibraryViewModel @Inject constructor(
 			}
 		}.launchIn(viewModelScope)
 	}
-
+	
 	private fun loadUserData(username: String) {
 		libraryUseCases.getBandcampUserDataUseCase(username).onEach { emission ->
 			if (emission is Success) {

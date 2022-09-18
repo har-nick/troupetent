@@ -20,19 +20,19 @@ class BandcampApi @Inject constructor(
 	private val token = encRepo.decryptData(
 		File(appContext.dataDir, "bandcamp_token_enc")
 	)
-
+	
 	suspend fun fetchCollectionSummary(): HttpResponse {
 		return client.get(BandcampConstants.SUMMARY_URL) {
 			header("Cookie", "identity=$token")
 		}
 	}
-
+	
 	suspend fun fetchCollectionItems(
 		fanId: Long,
 		itemCount: Int
 	): HttpResponse {
 		val olderThanToken = "${System.currentTimeMillis()}::a::"
-
+		
 		return client.post(BandcampConstants.ITEMS_URL) {
 			header("Cookie", "identity=$token")
 			contentType(ContentType.Application.Json)
@@ -45,7 +45,7 @@ class BandcampApi @Inject constructor(
 			)
 		}
 	}
-
+	
 	suspend fun fetchUserPage(
 		username: String
 	): HttpResponse {
@@ -53,7 +53,7 @@ class BandcampApi @Inject constructor(
 			header("Cookie", "identity=$token")
 		}
 	}
-
+	
 	suspend fun fetchStreamableUrl(
 		rawUrl: String
 	): HttpResponse {

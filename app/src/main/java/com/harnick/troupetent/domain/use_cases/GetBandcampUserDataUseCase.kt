@@ -22,28 +22,28 @@ class GetBandcampUserDataUseCase @Inject constructor(
 		username: String
 	) = flow {
 		lateinit var hoistedUserDataUri: File
-
+		
 		try {
 			emit(Resource.Loading())
-
+			
 			val userDataUri = File(appContext.dataDir, "user-data.json")
 			hoistedUserDataUri = userDataUri
-
+			
 			if (!userDataUri.isFile) {
 				throw SyncRequiredException
 			}
-
+			
 			val serializedData: BandcampUserData = Json.decodeFromString(userDataUri.readText())
-
+			
 			emit(Resource.Success(serializedData))
 		} catch (e: SyncRequiredException) {
 			emit(Resource.Fetching())
-
+			
 			val rawUserPage = api.fetchUserPage(username).bodyAsText()
 			val userImageId = rawUserPage
 				.substringAfter("popupImage\" href=\"https://f4.bcbits.com/img/")
 				.substringBefore("_20").toLong()
-
+			
 			hoistedUserDataUri.writeText(
 				Json.encodeToString(
 					BandcampUserData(
@@ -52,8 +52,13 @@ class GetBandcampUserDataUseCase @Inject constructor(
 					)
 				)
 			)
-
-			emit(Resource.Success())
+			
+			val serializedData = BandcampUserData(
+				username,
+				userImageId
+			)
+			
+			emit(Resource.Success(serializedData))
 		}
 	}
 }

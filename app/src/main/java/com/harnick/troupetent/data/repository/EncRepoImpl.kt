@@ -16,7 +16,7 @@ class EncRepoImpl @Inject constructor(
 	private val mainKey = MasterKey.Builder(appContext)
 		.setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
 		.build()
-
+	
 	override fun encryptData(path: File, data: String) {
 		val encryptedFile = EncryptedFile.Builder(
 			appContext,
@@ -24,18 +24,18 @@ class EncRepoImpl @Inject constructor(
 			mainKey,
 			EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
 		).build()
-
+		
 		if (path.exists()) {
 			path.delete()
 		}
-
+		
 		encryptedFile.openFileOutput().apply {
 			write(data.toByteArray(StandardCharsets.UTF_8))
 			flush()
 			close()
 		}
 	}
-
+	
 	override fun decryptData(path: File): String {
 		val encryptedFile = EncryptedFile.Builder(
 			appContext,
@@ -43,16 +43,16 @@ class EncRepoImpl @Inject constructor(
 			mainKey,
 			EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
 		).build()
-
+		
 		val inputStream = encryptedFile.openFileInput()
 		val byteArrayOutputStream = ByteArrayOutputStream()
 		var nextByte = inputStream.read()
-
+		
 		while (nextByte != -1) {
 			byteArrayOutputStream.write(nextByte)
 			nextByte = inputStream.read()
 		}
-
+		
 		return String(byteArrayOutputStream.toByteArray())
 	}
 }

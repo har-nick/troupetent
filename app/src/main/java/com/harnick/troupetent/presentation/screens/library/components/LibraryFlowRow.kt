@@ -16,16 +16,13 @@ fun LibraryFlowRow(
 	bandcampCollectionItemList: List<BandcampCollectionItem>
 ) {
 	FlowRow(
-		Modifier
-			.padding(
-				0.dp, 130.dp, 0.dp, 20.dp
-			),
+		Modifier.padding(0.dp, 10.dp, 0.dp, 20.dp),
 		mainAxisSpacing = 10.dp,
 		crossAxisSpacing = 10.dp,
 		lastLineMainAxisAlignment = FlowMainAxisAlignment.Start
 	) {
 		val cardSize = (LocalConfiguration.current.screenWidthDp.dp / 3) - 10.dp
-
+		
 		bandcampCollectionItemList.forEach { item ->
 			AlbumCard(
 				cardSize,

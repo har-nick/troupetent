@@ -25,17 +25,17 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
 	var state by mutableStateOf(LoginState())
 		private set
-
+	
 	private val _uiEvent = Channel<LoginEvent>()
 	val uiEvent = _uiEvent.receiveAsFlow()
-
-
+	
+	
 	private fun sendEvent(event: LoginEvent) {
 		viewModelScope.launch {
 			_uiEvent.send(event)
 		}
 	}
-
+	
 	fun onEvent(event: LoginEvent) {
 		when (event) {
 			LoginEvent.OpenDefaultLinks -> {
@@ -53,10 +53,10 @@ class LoginViewModel @Inject constructor(
 			}
 			is LoginEvent.TokenSaved -> {}
 		}
-
+		
 		sendEvent(event)
 	}
-
+	
 	private fun saveLoginToken(token: String) {
 		loginUseCases.saveBandcampLoginTokenUseCase(
 			File(appContext.dataDir, "bandcamp_token_enc"),

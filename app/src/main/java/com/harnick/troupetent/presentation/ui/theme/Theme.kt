@@ -79,7 +79,7 @@ fun TroupetentTheme(
 	content: @Composable () -> Unit
 ) {
 	val context = LocalContext.current
-
+	
 	val colorScheme = when (setTheme) {
 		AppTheme.AUTO -> {
 			if (systemDarkThemeEnabled) DarkColors else LightColors
@@ -99,14 +99,14 @@ fun TroupetentTheme(
 			}
 		}
 	}
-
+	
 	val view = LocalView.current
 	val window = (view.context as Activity).window
-
+	
 	SideEffect {
 		window.statusBarColor = Color.Transparent.toArgb()
 		window.navigationBarColor = Color.Transparent.toArgb()
-
+		
 		WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = when (setTheme) {
 			AppTheme.AUTO -> !systemDarkThemeEnabled
 			AppTheme.LIGHT -> false
@@ -116,7 +116,7 @@ fun TroupetentTheme(
 			AppTheme.YOU_DARK -> true
 		}
 	}
-
+	
 	MaterialTheme(
 		colorScheme = colorScheme,
 		typography = Typography,

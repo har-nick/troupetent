@@ -24,28 +24,28 @@ fun BandcampWebview(
 	val activity = context.findActivity()
 	val intent = activity?.intent
 	val loginUrl = intent?.data ?: "https://bandcamp.com/login"
-
+	
 	val webViewState = rememberWebViewState(loginUrl.toString())
 	val webViewNavigator = rememberWebViewNavigator()
 	val webViewClient = remember {
 		val cookieManager = CookieManager.getInstance()
 		cookieManager.removeAllCookies {}
 		object : AccompanistWebViewClient() {
-
+			
 			override fun onPageFinished(view: WebView?, url: String?) {
 				super.onPageFinished(view, url)
-
+				
 				if (url != null) {
 					if (url.startsWith("https://bandcamp.com")) {
 						val cookies = cookieManager.getCookie(url)
-
+						
 						val parsedCookies = cookies.split(";")
 							.associate {
 								val (left, right) = it.split("=")
 								left to right
 							}
 							.mapKeys { it.key.trim() }
-
+						
 						parsedCookies.forEach { cookie ->
 							if (cookie.key == "identity") {
 								viewModel.onEvent(LoginEvent.TokenFound(context, cookie.value))
@@ -56,14 +56,14 @@ fun BandcampWebview(
 			}
 		}
 	}
-
+	
 	WebView(
 		webViewState,
 		Modifier.fillMaxSize(),
 		navigator = webViewNavigator,
 		onCreated = { webView ->
 			webView.settings.javaScriptEnabled = true
-
+			
 		},
 		client = webViewClient
 	)

@@ -35,7 +35,7 @@ fun MarqueeText(
 		delay(1000)
 		scrollState.animateScrollTo(0)
 	}
-
+	
 	Text(
 		text,
 		Modifier

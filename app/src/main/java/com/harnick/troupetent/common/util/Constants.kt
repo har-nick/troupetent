@@ -3,7 +3,7 @@ package com.harnick.troupetent.common.util
 object AppConstants {
 	object MediaPlayer {
 		const val MEDIA_ROOT_ID = "tt_root_id"
-
+		
 		object Notification {
 			const val PLAYBACK_NOTIFICATION_CHANNEL_ID = "Troupetent Player"
 			const val PLAYBACK_NOTIFICATION_ID = 3
