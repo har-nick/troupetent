@@ -33,11 +33,9 @@ class MainActivity : ComponentActivity() {
 		WindowCompat.setDecorFitsSystemWindows(window, false)
 		
 		setContent {
-			val appSettings = dataStoreRepo
-				.getSettings()
-				.collectAsState(
-					AppSettings()
-				).value
+			val appSettings = dataStoreRepo.getSettings().collectAsState(
+				AppSettings()
+			).value
 			
 			val isLoggedIn = try {
 				encRepo.decryptData(

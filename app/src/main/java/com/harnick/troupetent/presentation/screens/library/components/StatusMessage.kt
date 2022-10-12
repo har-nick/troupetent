@@ -12,8 +12,6 @@ fun StatusMessage(
 	message: String
 ) {
 	Text(
-		message,
-		Modifier.padding(10.dp, 0.dp),
-		textAlign = TextAlign.Center
+		message, Modifier.padding(10.dp, 0.dp), textAlign = TextAlign.Center
 	)
 }

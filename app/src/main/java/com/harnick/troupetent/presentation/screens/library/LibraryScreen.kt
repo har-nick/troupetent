@@ -26,20 +26,18 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun LibraryScreen(
-	navigator: DestinationsNavigator,
-	libraryViewModel: LibraryViewModel = hiltViewModel()
+	navigator: DestinationsNavigator, libraryViewModel: LibraryViewModel = hiltViewModel()
 ) {
 	val libraryState = libraryViewModel.state
 	val context = LocalContext.current
 	
-	LaunchedEffect(true) {
+	LaunchedEffect(null) {
 		libraryViewModel.uiEvent.collect { event ->
 			when (event) {
 				is NavigateToPlayer -> {
 					navigator.navigate(
 						PlayerScreenDestination(
-							event.JSONEncodedItem,
-							event.JSONEncodedTrackList
+							event.JSONEncodedItem, event.JSONEncodedTrackList
 						)
 					)
 				}
@@ -48,27 +46,20 @@ fun LibraryScreen(
 		}
 	}
 	
-	Scaffold(
-		topBar = {
-			MainHeader(
-				libraryState.userProfilePictureId,
-				libraryState.username
-			)
-		},
-		snackbarHost = { SnackbarHost(libraryState.snackbarState) }
-	) { headSizeAsPadding ->
+	Scaffold(topBar = {
+		MainHeader(
+			libraryState.userProfilePictureId, libraryState.username
+		)
+	}, snackbarHost = { SnackbarHost(libraryState.snackbarState) }) { headerSizeAsPadding ->
 		
 		LazyColumn(
 			Modifier
 				.padding(
-					0.dp,
-					headSizeAsPadding.calculateTopPadding(),
-					0.dp,
-					0.dp
+					0.dp, headerSizeAsPadding.calculateTopPadding(), 0.dp, 0.dp
 				)
 				.fillMaxSize(),
 			horizontalAlignment = Alignment.CenterHorizontally,
-			verticalArrangement = Arrangement.Top
+			verticalArrangement = Arrangement.Center
 		) {
 			libraryState.statusMessage?.also {
 				item {
