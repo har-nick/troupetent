@@ -2,8 +2,8 @@ package com.harnick.troupetent.domain.use_cases
 
 import android.content.Context
 import com.harnick.troupetent.common.util.Resource
-import com.harnick.troupetent.data.model.BandcampExceptions.SyncRequiredException
 import com.harnick.troupetent.data.remote.bandcamp.BandcampApi
+import com.harnick.troupetent.domain.model.BandcampExceptions.SyncRequiredException
 import com.harnick.troupetent.domain.model.bandcamp.BandcampUserData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.ktor.client.statement.*

@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.core.view.WindowCompat
-import com.harnick.troupetent.data.model.AppSettings
+import com.harnick.troupetent.domain.model.AppSettings
 import com.harnick.troupetent.domain.repository.DataStoreRepo
 import com.harnick.troupetent.domain.repository.EncRepo
 import com.harnick.troupetent.presentation.screens.NavGraphs

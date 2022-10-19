@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.harnick.troupetent.data.model.AppTheme
+import com.harnick.troupetent.domain.model.AppTheme
 
 private val LightColors = lightColorScheme(
 	primary = md_theme_light_primary,

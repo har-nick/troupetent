@@ -1,7 +1,7 @@
 package com.harnick.troupetent.domain.serializers
 
 import androidx.datastore.core.Serializer
-import com.harnick.troupetent.data.model.AppSettings
+import com.harnick.troupetent.domain.model.AppSettings
 import kotlinx.serialization.json.Json
 import java.io.InputStream
 import java.io.OutputStream

@@ -2,9 +2,9 @@ package com.harnick.troupetent.data.repository
 
 import android.content.Context
 import androidx.datastore.dataStore
-import com.harnick.troupetent.data.model.AppSettings
-import com.harnick.troupetent.data.model.AppTheme
-import com.harnick.troupetent.data.model.Language
+import com.harnick.troupetent.domain.model.AppSettings
+import com.harnick.troupetent.domain.model.AppTheme
+import com.harnick.troupetent.domain.model.Language
 import com.harnick.troupetent.domain.repository.DataStoreRepo
 import com.harnick.troupetent.domain.serializers.AppSettingsSerializer
 import dagger.hilt.android.qualifiers.ApplicationContext
