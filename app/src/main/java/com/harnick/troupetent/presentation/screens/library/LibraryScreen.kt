@@ -1,8 +1,6 @@
 package com.harnick.troupetent.presentation.screens.library
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -53,11 +51,7 @@ fun LibraryScreen(
 	}, snackbarHost = { SnackbarHost(libraryState.snackbarState) }) { headerSizeAsPadding ->
 		
 		LazyColumn(
-			Modifier
-				.padding(
-					0.dp, headerSizeAsPadding.calculateTopPadding(), 0.dp, 0.dp
-				)
-				.fillMaxSize(),
+			Modifier.fillMaxSize(),
 			horizontalAlignment = Alignment.CenterHorizontally,
 			verticalArrangement = Arrangement.Center
 		) {
@@ -75,6 +69,9 @@ fun LibraryScreen(
 			
 			libraryState.bandcampLibraryData?.also {
 				item {
+					Spacer(
+						Modifier.height(headerSizeAsPadding.calculateTopPadding())
+					)
 					LibraryFlowRow(libraryState.bandcampLibraryData.bandcampCollectionItemList)
 				}
 			}
