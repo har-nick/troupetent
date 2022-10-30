@@ -32,20 +32,20 @@ private class BandcampWebviewClient(
 			cookieManager.removeAllCookies(null)
 			cookieManager.setAcceptThirdPartyCookies(view, false)
 			firstLoad = false
-		}
-		
-		if (url != null) {
-			if (url.startsWith("https://bandcamp.com")) {
-				val cookies = cookieManager.getCookie(url)
-				
-				val parsedCookies = cookies.split(";").associate {
+		} else {
+			if (url != null) {
+				if (url.startsWith("https://bandcamp.com")) {
+					val cookies = cookieManager.getCookie(url)
+					
+					val parsedCookies = cookies.split(";").associate {
 						val (left, right) = it.split("=")
 						left to right
 					}.mapKeys { it.key.trim() }
-				
-				parsedCookies.forEach { cookie ->
-					if (cookie.key == "identity") {
-						viewModel.onEvent(LoginEvent.TokenFound(localContext, cookie.value))
+					
+					parsedCookies.forEach { cookie ->
+						if (cookie.key == "identity") {
+							viewModel.onEvent(LoginEvent.TokenFound(localContext, cookie.value))
+						}
 					}
 				}
 			}
