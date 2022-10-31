@@ -30,7 +30,7 @@ This list is inexhaustive, though likely in order.
 - [ ] Bandcamp Radio? Maybe?
 - [ ] Branding
 
-## ❓ FAQ
+## 🙋 FAQ
 
 > What's a "Troupetent"?
 
@@ -50,7 +50,7 @@ No.
 
 ## 🔧 Technical Stuff
 
-Supports Android Marshmallow to [Current Android version]. Obviously intended to be used with Android 12+.
+Supports Android Marshmallow to [Current Android version]. Intended to be used with Android 12+.
 
 Developed using [Material 3](https://m3.material.io/), [Compose](https://developer.android.com/jetpack/compose), [Coil](https://coil-kt.github.io/coil/), [ExoPlayer](https://developer.android.com/jetpack/androidx/releases/media3), and [Ktor](https://ktor.io/).
 
