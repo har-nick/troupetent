@@ -21,8 +21,6 @@ Alternatively, clone and build it yourself to get updates quicker.
 ## 📋 To-Do
 
 This list is inexhaustive, though likely in order.
-
-- [ ] Linting rules
 - [ ] Music player functionality
 - [ ] Playlists
 - [ ] Settings page
