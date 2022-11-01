@@ -6,6 +6,7 @@ import com.harnick.troupetent.domain.model.bandcamp.BandcampLibraryData
 data class LibraryState(
 	val errorMessage: String? = null,
 	val bandcampLibraryData: BandcampLibraryData? = null,
+	val headerGreeting: String,
 	val snackbarText: String? = null,
 	val snackbarState: SnackbarHostState = SnackbarHostState(),
 	val statusMessage: String? = null,

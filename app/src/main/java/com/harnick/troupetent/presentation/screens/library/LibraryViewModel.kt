@@ -18,13 +18,18 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
 	private val libraryUseCases: LibraryUseCases
 ) : ViewModel() {
-	var state by mutableStateOf(LibraryState())
+	var state by mutableStateOf(
+		LibraryState(
+			headerGreeting = generateGreeting()
+		)
+	)
 		private set
 	
 	private val _uiEvent = Channel<LibraryEvent>()
@@ -62,6 +67,27 @@ class LibraryViewModel @Inject constructor(
 			}
 			else -> {}
 		}
+	}
+	
+	private fun generateGreeting(): String {
+		val currentTime = LocalDateTime.now().hour
+		val greetings = mutableListOf(
+			"Hello",
+			"Hi",
+			"Hey"
+		)
+		
+		if ((5..11).contains(currentTime)) {
+			greetings.add("Good morning")
+		} else if ((12..16).contains(currentTime)) {
+			greetings.add("Good afternoon")
+		} else if ((17..20).contains(currentTime)) {
+			greetings.add("Good evening")
+		} else {
+			greetings.add("Good night")
+		}
+		
+		return greetings.random()
 	}
 	
 	private fun showSnackbar() {

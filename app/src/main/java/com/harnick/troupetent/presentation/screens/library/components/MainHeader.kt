@@ -45,7 +45,9 @@ private fun MainHeaderIconButton(
 
 @Composable
 fun MainHeader(
-	profilePictureId: Long?, username: String?
+	profilePictureId: Long?,
+	greeting: String?,
+	username: String?
 ) {
 	Row(
 		Modifier
@@ -76,7 +78,9 @@ fun MainHeader(
 			
 			Spacer(Modifier.width(15.dp))
 			
-			username?.also { HeaderGreeting(username) }
+			if (!username.isNullOrEmpty() && !greeting.isNullOrEmpty()) {
+				HeaderGreeting(greeting, username)
+			}
 		}
 		Row(
 			Modifier.fillMaxHeight(), Arrangement.SpaceAround, Alignment.CenterVertically
