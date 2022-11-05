@@ -1,7 +1,6 @@
 package com.harnick.troupetent.presentation.ui.theme
 
 import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -12,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.harnick.troupetent.domain.model.AppTheme
+import com.harnick.troupetent.domain.model.AppTheme.*
 
 private val LightColors = lightColorScheme(
 	primary = md_theme_light_primary,
@@ -81,23 +81,13 @@ fun TroupetentTheme(
 	val context = LocalContext.current
 	
 	val colorScheme = when (setTheme) {
-		AppTheme.AUTO -> {
-			if (systemDarkThemeEnabled) DarkColors else LightColors
-		}
-		AppTheme.LIGHT -> LightColors
-		AppTheme.DARK -> DarkColors
-		AppTheme.AMOLED -> TODO()
-		else -> {
-			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-				throw Exception("Material You theme selected, but Android version is too low")
-			} else if (setTheme == AppTheme.YOU_LIGHT) {
-				dynamicLightColorScheme(context)
-			} else if (setTheme == AppTheme.YOU_DARK) {
-				dynamicDarkColorScheme(context)
-			} else {
-				LightColors
-			}
-		}
+		AUTO -> if (systemDarkThemeEnabled) DarkColors else LightColors
+		LIGHT -> LightColors
+		DARK -> DarkColors
+		AMOLED -> TODO()
+		YOU_AUTO -> if (systemDarkThemeEnabled) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+		YOU_LIGHT -> dynamicLightColorScheme(context)
+		YOU_DARK -> dynamicDarkColorScheme(context)
 	}
 	
 	val view = LocalView.current
@@ -108,12 +98,9 @@ fun TroupetentTheme(
 		window.navigationBarColor = Color.Transparent.toArgb()
 		
 		WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = when (setTheme) {
-			AppTheme.AUTO -> !systemDarkThemeEnabled
-			AppTheme.LIGHT -> false
-			AppTheme.DARK -> true
-			AppTheme.AMOLED -> true
-			AppTheme.YOU_LIGHT -> false
-			AppTheme.YOU_DARK -> true
+			AUTO, YOU_AUTO -> !systemDarkThemeEnabled
+			LIGHT, YOU_LIGHT -> false
+			DARK, AMOLED, YOU_DARK -> true
 		}
 	}
 	
