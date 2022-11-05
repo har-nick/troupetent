@@ -27,6 +27,7 @@ This list is inexhaustive, though likely in order.
 - [ ] Downloading tracks / albums
 - [ ] Bandcamp Radio? Maybe?
 - [ ] Branding
+- [ ] Multi-platform (Keeping an eye on KMM)
 
 ## 🙋 FAQ
 
