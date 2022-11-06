@@ -10,11 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun OnboardingButton(onClick: () -> Unit, text: String, activator: Boolean) {
+fun OnboardingButton(
+	openDefaultLinks: () -> Unit,
+	text: String
+) {
 	Button(
-		onClick,
+		openDefaultLinks,
 		Modifier.width(200.dp),
-		enabled = activator,
 		shape = MaterialTheme.shapes.medium,
 		colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
 	) {
