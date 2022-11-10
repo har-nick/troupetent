@@ -36,12 +36,5 @@
                 <data android:pathPrefix="/login_confirmed" />
             </intent-filter>
         </activity>
-        <service
-            android:name=".exoplayer.PlayerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.media.browser.MediaBrowserService" />
-            </intent-filter>
-        </service>
     </application>
 </manifest>
