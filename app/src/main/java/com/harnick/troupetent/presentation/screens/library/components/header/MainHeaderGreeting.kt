@@ -1,4 +1,4 @@
-package com.harnick.troupetent.presentation.screens.library.components
+package com.harnick.troupetent.presentation.screens.library.components.header
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun HeaderGreeting(
+fun MainHeaderGreeting(
 	greeting: String,
 	username: String
 ) {
