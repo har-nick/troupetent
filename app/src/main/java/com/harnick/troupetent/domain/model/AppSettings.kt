@@ -4,10 +4,12 @@ package com.harnick.troupetent.domain.model
 
 import android.os.Build
 import kotlinx.serialization.Serializable
+import java.lang.reflect.Field
+import java.lang.reflect.Type
 
 @Serializable
 data class AppSettings(
-	val appTheme: AppTheme = if (Build.VERSION.SDK_INT < 31) AppTheme.AUTO else AppTheme.YOU_AUTO,
+	val appTheme: AppTheme = if (Build.VERSION.SDK_INT < 31) AppTheme.Auto else AppTheme.YouAuto,
 	val dataSaverMode: Boolean = false,
 	val displayLanguage: Language = Language.ENG,
 	val bandcampDownloadEncoding: BandcampEncoder = BandcampEncoder.MP3320,
@@ -16,37 +18,55 @@ data class AppSettings(
 )
 
 @Serializable
-enum class AppTheme(val displayName: String) {
-	AUTO("Follow system theme"),
-	LIGHT("Light"),
-	DARK("Dark"),
-	AMOLED("AMOLED"),
-	YOU_AUTO("Material You - Follow system theme"),
-	YOU_LIGHT("Material You - Light"),
-	YOU_DARK("Material You - Dark")
+abstract class Setting(
+	val settingTitle: String,
+	val settingDescription: String?
+)
+
+@Serializable
+sealed class AppTheme(val displayName: String) : Setting(
+	"Application Theme",
+	null,
+) {
+	object Auto : AppTheme("Follow system theme")
+	object Light : AppTheme("Light")
+	object Dark : AppTheme("Dark")
+	object AMOLED : AppTheme("AMOLED")
+	object YouAuto : AppTheme("Material You - Follow system theme")
+	object YouLight : AppTheme("Material You - Light")
+	object YouDark : AppTheme("Material You - Dark")
 }
 
 @Serializable
-enum class BandcampEncoder(val apiName: String, val displayName: String) {
-	AAC("aac-hi", "AAC"),
-	AIFF("aiff-lossless", "AIFF"),
-	ALAC("alac", "ALAC"),
-	FLAC("flac", "FLAC"),
-	MP3320("mp3-320", "MP3 (320kbps)"),
-	MP3V0("mp3-v0", "MP3 (VBR V0)"),
-	OGG("vorbis", "Ogg Vorbis"),
-	WAV("wav", "WAV")
+sealed class BandcampEncoder(val apiName: String, val displayName: String) : Setting(
+	"Default Download Format",
+	null
+) {
+	object AAC : BandcampEncoder("aac-hi", "AAC")
+	object AIFF : BandcampEncoder("aiff-lossless", "AIFF")
+	object ALAC : BandcampEncoder("alac", "ALAC")
+	object FLAC : BandcampEncoder("flac", "FLAC")
+	object MP3320 : BandcampEncoder("mp3-320", "MP3 (320kbps)")
+	object MP3V0 : BandcampEncoder("mp3-v0", "MP3 (VBR V0)")
+	object OGG : BandcampEncoder("vorbis", "Ogg Vorbis")
+	object WAV : BandcampEncoder("wav", "WAV")
 }
 
 @Serializable
-enum class Language(val displayName: String) {
-	ENG("English - International"),
-	US("English - United States")
+sealed class Language(val displayName: String) : Setting(
+	"Display Language",
+	null
+) {
+	object ENG : Language("English - International")
+	object US : Language("English - United States")
 }
 
 @Serializable
-enum class ProfilePicture(val displayName: String) {
+sealed class ProfilePicture(val displayName: String) : Setting(
+	"Profile Picture",
+	"How your profile picture should be displayed"
+) {
 	//	CUSTOM("Display a custom profile picture"),
-	DEFAULT("Use your Bandcamp profile picture"),
-	NONE("Do not display a profile picture")
+	object DEFAULT : ProfilePicture("Use your Bandcamp profile picture")
+	object NONE : ProfilePicture("Do not display a profile picture")
 }

@@ -81,13 +81,13 @@ fun TroupetentTheme(
 	val context = LocalContext.current
 	
 	val colorScheme = when (setTheme) {
-		AUTO -> if (systemDarkThemeEnabled) DarkColors else LightColors
-		LIGHT -> LightColors
-		DARK -> DarkColors
+		Auto -> if (systemDarkThemeEnabled) DarkColors else LightColors
+		Light -> LightColors
+		Dark -> DarkColors
 		AMOLED -> TODO()
-		YOU_AUTO -> if (systemDarkThemeEnabled) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-		YOU_LIGHT -> dynamicLightColorScheme(context)
-		YOU_DARK -> dynamicDarkColorScheme(context)
+		YouAuto -> if (systemDarkThemeEnabled) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+		YouLight -> dynamicLightColorScheme(context)
+		YouDark -> dynamicDarkColorScheme(context)
 	}
 	
 	val view = LocalView.current
@@ -98,9 +98,9 @@ fun TroupetentTheme(
 		window.navigationBarColor = Color.Transparent.toArgb()
 		
 		WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = when (setTheme) {
-			AUTO, YOU_AUTO -> !systemDarkThemeEnabled
-			LIGHT, YOU_LIGHT -> false
-			DARK, AMOLED, YOU_DARK -> true
+			Auto, YouAuto -> !systemDarkThemeEnabled
+			Light, YouLight -> false
+			Dark, AMOLED, YouDark -> true
 		}
 	}
 	
