@@ -14,13 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.harnick.troupetent.common.util.findActivity
+import com.harnick.troupetent.presentation.screens.NavGraphs
 import com.harnick.troupetent.presentation.screens.destinations.LibraryScreenDestination
-import com.harnick.troupetent.presentation.screens.destinations.LoginScreenDestination
 import com.harnick.troupetent.presentation.screens.login.components.BandcampWebview
 import com.harnick.troupetent.presentation.screens.login.components.OnboardingSplash
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 
 @RootNavGraph(true)
 @Destination
@@ -46,8 +47,9 @@ fun LoginScreen(
 				
 				localContext.startActivity(openLinkIntent)
 			} else if (event is LoginEvent.TokenSaved) {
-				navigator.navigate(LibraryScreenDestination)
-				navigator.clearBackStack(LoginScreenDestination)
+				navigator.navigate(LibraryScreenDestination) {
+					popUpTo(NavGraphs.root) { inclusive = true }
+				}
 			}
 		}
 	}
