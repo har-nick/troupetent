@@ -21,11 +21,11 @@ Alternatively, clone and build it yourself to get updates quicker.
 ## 📋 To-Do
 
 This list is inexhaustive, though likely in order.
+- [ ] Settings page
 - [ ] Music player functionality
 - [ ] Playlists
-- [ ] Settings page
+- [ ] Bandcamp Radio support
 - [ ] Downloading tracks / albums
-- [ ] Bandcamp Radio? Maybe?
 - [ ] Branding
 - [ ] Multi-platform (Keeping an eye on KMM)
 
