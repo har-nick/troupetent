@@ -21,6 +21,7 @@ Alternatively, clone and build it yourself to get updates quicker.
 ## 📋 To-Do
 
 This list is inexhaustive, though likely in order.
+- [ ] Migrate settings data from Proto DataStore to Room for partial updates
 - [ ] Settings page
 - [ ] Music player functionality
 - [ ] Playlists
