@@ -8,6 +8,7 @@ buildscript {
 		hilt_version = '2.43.2'
 		kotlin_version = '1.7.10'
 		ktor_version = '2.1.0'
+		room_version = '2.4.3'
 	}
 	dependencies {
 		classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"

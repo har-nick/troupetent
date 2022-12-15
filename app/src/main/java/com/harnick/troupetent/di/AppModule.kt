@@ -1,9 +1,13 @@
 package com.harnick.troupetent.di
 
 import android.content.Context
+import androidx.room.Room
 import coil.ImageLoader
+import com.harnick.troupetent.data.model.SettingsDatabase
 import com.harnick.troupetent.data.remote.bandcamp.BandcampApi
+import com.harnick.troupetent.data.repository.SettingsRepoImpl
 import com.harnick.troupetent.domain.repository.EncRepo
+import com.harnick.troupetent.domain.repository.SettingsRepo
 import com.harnick.troupetent.domain.use_cases.*
 import com.harnick.troupetent.domain.use_cases.collated.LibraryUseCases
 import com.harnick.troupetent.domain.use_cases.collated.LoginUseCases
@@ -74,5 +78,23 @@ object AppModule {
 		return PlayerUseCases(
 			GetBandcampStreamUrl(api)
 		)
+	}
+	
+	@Provides
+	@Singleton
+	fun provideSettingsDatabase(
+		@ApplicationContext appContext: Context
+	): SettingsDatabase {
+		return Room.databaseBuilder(
+			appContext,
+			SettingsDatabase::class.java,
+			SettingsDatabase.DB_NAME
+		).build()
+	}
+	
+	@Provides
+	@Singleton
+	fun provideSettingsRepo(database: SettingsDatabase): SettingsRepo {
+		return SettingsRepoImpl(database.settingsDao)
 	}
 }
