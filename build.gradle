@@ -2,7 +2,7 @@ buildscript {
 	ext {
 		accompanist_version = '0.26.0-alpha'
 		coil_version = '2.2.1'
-		compose_version = '1.4.0-alpha02'
+		compose_version = '1.4.0-alpha03'
 		destinations_version = '1.7.23-beta'
 		exoplayer_version = '2.18.1'
 		hilt_version = '2.43.2'
