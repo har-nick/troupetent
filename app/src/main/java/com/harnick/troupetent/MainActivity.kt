@@ -10,7 +10,7 @@ import com.harnick.troupetent.domain.repository.EncRepo
 import com.harnick.troupetent.domain.repository.SettingsRepo
 import com.harnick.troupetent.presentation.screens.NavGraphs
 import com.harnick.troupetent.presentation.screens.destinations.LibraryScreenDestination
-import com.harnick.troupetent.presentation.screens.destinations.LoginScreenDestination
+import com.harnick.troupetent.presentation.screens.destinations.OnboardingScreenDestination
 import com.harnick.troupetent.presentation.ui.theme.TroupetentTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,8 +24,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-	
-	// TODO: INIT ROOM HERE
 	
 	@Inject
 	lateinit var encRepo: EncRepo
@@ -48,7 +46,7 @@ class MainActivity : ComponentActivity() {
 		
 		
 		setContent {
-			val appSettings = settingsFlow.collectAsState(AppSettings()).value!!
+			val appSettings = settingsFlow.collectAsState(AppSettings()).value
 			
 			val isLoggedIn = try {
 				encRepo.decryptData(
@@ -58,9 +56,9 @@ class MainActivity : ComponentActivity() {
 				false
 			}
 			
-			val startRoute = if (isLoggedIn) LibraryScreenDestination else LoginScreenDestination
-
-			TroupetentTheme(appSettings.appTheme) {
+			val startRoute = if (isLoggedIn) LibraryScreenDestination else OnboardingScreenDestination
+			
+			TroupetentTheme(appSettings!!.appTheme) {
 				DestinationsNavHost(navGraph = NavGraphs.root, startRoute = startRoute)
 			}
 		}

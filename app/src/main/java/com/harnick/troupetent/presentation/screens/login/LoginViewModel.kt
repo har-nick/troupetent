@@ -29,7 +29,6 @@ class LoginViewModel @Inject constructor(
 	private val _uiEvent = Channel<LoginEvent>()
 	val uiEvent = _uiEvent.receiveAsFlow()
 	
-	
 	private fun sendEvent(event: LoginEvent) {
 		viewModelScope.launch {
 			_uiEvent.send(event)
@@ -38,16 +37,6 @@ class LoginViewModel @Inject constructor(
 	
 	fun onEvent(event: LoginEvent) {
 		when (event) {
-			LoginEvent.OpenDefaultLinks -> {
-				state = state.copy(
-					canOpenLinks = true
-				)
-			}
-			LoginEvent.OpenWebView -> {
-				state = state.copy(
-					webViewEnabled = true
-				)
-			}
 			is LoginEvent.TokenFound -> {
 				saveLoginToken(event.token)
 			}

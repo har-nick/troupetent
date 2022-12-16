@@ -1,4 +1,4 @@
-package com.harnick.troupetent.presentation.screens.login.components
+package com.harnick.troupetent.presentation.screens.onboarding.components
 
 import android.os.Build
 import androidx.compose.foundation.layout.Spacer
