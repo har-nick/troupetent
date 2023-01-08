@@ -1,6 +1,6 @@
 package com.harnick.troupetent.data.repository
 
-import com.harnick.troupetent.data.model.SettingsDao
+import com.harnick.troupetent.data.model.room.settings.SettingsDao
 import com.harnick.troupetent.domain.model.AppSettings
 import com.harnick.troupetent.domain.repository.SettingsRepo
 import kotlinx.coroutines.flow.Flow

@@ -3,7 +3,7 @@ package com.harnick.troupetent.di
 import android.content.Context
 import androidx.room.Room
 import coil.ImageLoader
-import com.harnick.troupetent.data.model.SettingsDatabase
+import com.harnick.troupetent.data.model.room.settings.SettingsDatabase
 import com.harnick.troupetent.data.remote.bandcamp.BandcampApi
 import com.harnick.troupetent.data.repository.SettingsRepoImpl
 import com.harnick.troupetent.domain.repository.EncRepo

@@ -9,7 +9,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import io.ktor.client.statement.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
 import javax.inject.Inject
@@ -19,6 +18,7 @@ class GetBandcampUserDataUseCase @Inject constructor(
 	@ApplicationContext private val appContext: Context
 ) {
 	operator fun invoke(
+		token: String,
 		username: String
 	) = flow {
 		lateinit var hoistedUserDataUri: File
@@ -44,21 +44,15 @@ class GetBandcampUserDataUseCase @Inject constructor(
 				.substringAfter("popupImage\" href=\"https://f4.bcbits.com/img/")
 				.substringBefore("_20").toLong()
 			
-			hoistedUserDataUri.writeText(
-				Json.encodeToString(
-					BandcampUserData(
-						username,
-						userImageId
-					)
-				)
-			)
-			
-			val serializedData = BandcampUserData(
+			val serializedUserData = BandcampUserData(
+				userImageId,
 				username,
-				userImageId
+				token
 			)
 			
-			emit(Resource.Success(serializedData))
+			
+			
+			emit(Resource.Success(serializedUserData))
 		}
 	}
 }

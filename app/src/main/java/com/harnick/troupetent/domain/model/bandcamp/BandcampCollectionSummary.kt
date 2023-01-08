@@ -1,7 +1,7 @@
 package com.harnick.troupetent.domain.model.bandcamp
 
-import com.harnick.troupetent.data.remote.bandcamp.dto.collection_summary.CollectionSummaryEntity
-import com.harnick.troupetent.data.remote.bandcamp.dto.collection_summary.TralbumLookupEntity
+import com.harnick.troupetent.data.remote.bandcamp.dto.library_responses.collection_summary.CollectionSummaryEntity
+import com.harnick.troupetent.data.remote.bandcamp.dto.library_responses.collection_summary.TralbumLookupEntity
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -3,8 +3,8 @@ package com.harnick.troupetent.domain.use_cases
 import android.content.Context
 import com.harnick.troupetent.common.util.Resource
 import com.harnick.troupetent.data.remote.bandcamp.BandcampApi
-import com.harnick.troupetent.data.remote.bandcamp.dto.ErrorResponseEntity
-import com.harnick.troupetent.data.remote.bandcamp.dto.collection_items.BandcampCollectionItemsResponseEntity
+import com.harnick.troupetent.data.remote.bandcamp.dto.library_responses.ErrorResponseEntity
+import com.harnick.troupetent.data.remote.bandcamp.dto.library_responses.collection_items.BandcampCollectionItemsResponseEntity
 import com.harnick.troupetent.domain.model.BandcampExceptions.SyncRequiredException
 import com.harnick.troupetent.domain.model.bandcamp.BandcampCollectionSummary
 import com.harnick.troupetent.domain.model.bandcamp.BandcampLibraryData

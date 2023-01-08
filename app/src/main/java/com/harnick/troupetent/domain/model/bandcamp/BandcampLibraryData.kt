@@ -1,6 +1,6 @@
 package com.harnick.troupetent.domain.model.bandcamp
 
-import com.harnick.troupetent.data.remote.bandcamp.dto.collection_items.BandcampCollectionItemsResponseEntity
+import com.harnick.troupetent.data.remote.bandcamp.dto.library_responses.collection_items.BandcampCollectionItemsResponseEntity
 import kotlinx.serialization.Serializable
 
 @Serializable

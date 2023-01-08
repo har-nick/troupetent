@@ -1,4 +1,4 @@
-package com.harnick.troupetent.data.model
+package com.harnick.troupetent.data.model.room.settings
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

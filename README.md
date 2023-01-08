@@ -54,6 +54,6 @@ Supports Android Marshmallow to [Current Android version]. Intended to be used w
 
 Developed using [Material 3](https://m3.material.io/), [Compose](https://developer.android.com/jetpack/compose), [Coil](https://coil-kt.github.io/coil/), [ExoPlayer](https://developer.android.com/jetpack/androidx/releases/media3), and [Ktor](https://ktor.io/).
 
-Version codes follow AMD's nomenclature of ` [YYYY / MM / DD] ` - for example: ` 1970.01.01 `.
+Version codes are [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) standard. For example: ` 1970.01.01 `.
 
 I also wrote a small wiki on Bandcamp's API. You can find it at [har-nick/bandcamp-api-docs](https://github.com/har-nick/bandcamp-api-docs).

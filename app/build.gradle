@@ -7,6 +7,10 @@ plugins {
 	id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
+static def versionCodeDate() {
+	return new Date().format("YYYY-MM-DD").toString()
+}
+
 android {
 	compileSdk 33
 
@@ -15,7 +19,7 @@ android {
 		minSdk 23
 		targetSdk 33
 		versionCode 1
-		versionName "2022.08.01"
+		versionName versionCodeDate()
 
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		vectorDrawables {
@@ -71,6 +75,9 @@ dependencies {
 	// Accompanist
 	implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
 	implementation "com.google.accompanist:accompanist-webview:$accompanist_version"
+
+	// Android Request Inspector
+	implementation 'com.github.acsbendi:Android-Request-Inspector-WebView:1.0.2'
 
 	// Coil
 	implementation "io.coil-kt:coil-base:$coil_version"

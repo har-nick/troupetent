@@ -2,7 +2,7 @@ package com.harnick.troupetent.data.remote.bandcamp
 
 import android.content.Context
 import com.harnick.troupetent.common.util.BandcampConstants
-import com.harnick.troupetent.data.remote.bandcamp.dto.collection_items.CollectionItemsRequestEntity
+import com.harnick.troupetent.data.remote.bandcamp.dto.library_responses.collection_items.CollectionItemsRequestEntity
 import com.harnick.troupetent.domain.repository.EncRepo
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.ktor.client.*
