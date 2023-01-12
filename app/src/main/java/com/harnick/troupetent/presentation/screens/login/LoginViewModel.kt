@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.harnick.troupetent.common.util.Resource
 import com.harnick.troupetent.domain.use_cases.collated.LoginUseCases
+import com.harnick.troupetent.presentation.screens.login.LoginEvent.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
@@ -37,13 +38,83 @@ class LoginViewModel @Inject constructor(
 	
 	fun onEvent(event: LoginEvent) {
 		when (event) {
-			is LoginEvent.TokenFound -> {
-				saveLoginToken(event.token)
+			is CaptchaServed -> {
+				if (!state.webViewVisible) {
+					state = state.copy(
+						webViewEnabled = true,
+						webViewVisible = true
+					)
+				}
 			}
-			is LoginEvent.TokenSaved -> {}
+			
+			is LoginError -> {
+				
+				
+				state = state.copy(
+					error = event.error,
+					status = null,
+					webViewEnabled = false,
+					webViewVisible = true
+				)
+			}
+			
+			is LoginFormSubmission -> {
+				state = state.copy(
+					status = "Logging in...",
+					webViewEnabled = true,
+					webViewVisible = false
+				)
+			}
+			
+			is RetryLogin -> {
+				state = state.copy(
+					error = null,
+					status = null,
+					webViewEnabled = true,
+					webViewVisible = true
+				)
+			}
+			
+			is TokenFound -> {
+				state = state.copy(
+					status = "Saving token...",
+					webViewEnabled = false,
+					webViewVisible = false
+				)
+			}
+			
+			is TokenSaved -> {
+				sendEvent(event)
+			}
+			
+			is WebViewPageLoaded -> {
+				state = state.copy(
+					webViewVisible = true
+				)
+			}
+			
+			is WebViewPageLoading -> {
+				state = state.copy(
+					webViewVisible = false
+				)
+			}
 		}
+	}
+	
+	fun parseRawBandcampCookies(rawToken: String, localContext: Context) {
+		val parsedCookies = rawToken
+			.split(";")
+			.associate { rawCookie ->
+				val (name, value) = rawCookie.split("=")
+				name to value
+			}
+			.mapKeys { splitCookie -> splitCookie.key.trim() }
 		
-		sendEvent(event)
+		if (parsedCookies.containsKey("identity")) {
+			val token = parsedCookies.getValue("identity")
+			onEvent(TokenFound(localContext, token))
+			saveLoginToken(token)
+		}
 	}
 	
 	private fun saveLoginToken(token: String) {
@@ -51,21 +122,12 @@ class LoginViewModel @Inject constructor(
 			File(appContext.dataDir, "bandcamp_token_enc"),
 			token
 		).onEach { emission ->
-			when (emission) {
-				is Resource.Saving -> {
-					state = state.copy(
-						savingToken = true
-					)
-				}
-				is Resource.Error -> {
-					state = state.copy(
-						error = state.error.plus("\n${emission.message}")
-					)
-				}
-				is Resource.Success -> {
-					sendEvent(LoginEvent.TokenSaved)
-				}
-				else -> {}
+			if (emission is Resource.Error) {
+				state = state.copy(
+					error = emission.message
+				)
+			} else if (emission is Resource.Success) {
+				sendEvent(TokenSaved)
 			}
 		}.launchIn(viewModelScope)
 	}

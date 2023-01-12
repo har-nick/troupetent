@@ -21,8 +21,13 @@ class BandcampWebChromeClient(
 		val content = consoleMessage.message()
 		
 		if (content.contains(delimiter)) {
-			val error = content.substringAfter(delimiter)
-			
+//			val error = content.substringAfter(delimiter)
+			val error = content.subSequence(
+				startIndex = content.indexOf(delimiter).plus(delimiter.length),
+				endIndex = content.indexOf(".").inc()
+			).toString()
+
+//		Console messages seem to repeat a dozen times. Idk.
 			if (error != lastErrorMessage) {
 				viewModel.onEvent(LoginEvent.LoginError(error))
 				lastErrorMessage = error

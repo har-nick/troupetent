@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.harnick.troupetent.presentation.components.HyperlinkText
+import com.harnick.troupetent.presentation.components.SquaredButton
 
 @Composable
 fun OnboardingSplash(
@@ -32,10 +33,10 @@ fun OnboardingSplash(
 			fontSize = MaterialTheme.typography.bodyLarge.fontSize
 		)
 		
-		OnboardingButton(openDefaultLinks, "Open Supported Links")
+		SquaredButton(openDefaultLinks, 200.dp, "Open Supported Links")
 		
 		Spacer(Modifier.height(5.dp))
 	}
 	
-	OnboardingButton(openWebView, "Login to Bandcamp")
+	SquaredButton(openWebView, 200.dp, "Login to Bandcamp")
 }

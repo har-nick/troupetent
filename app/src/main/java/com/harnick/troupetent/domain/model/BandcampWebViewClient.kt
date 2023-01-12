@@ -1,6 +1,7 @@
 package com.harnick.troupetent.domain.model
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.webkit.*
 import com.google.accompanist.web.AccompanistWebViewClient
@@ -22,15 +23,12 @@ class BandcampWebViewClient(
 	inner class BandcampWebViewInterface {
 		@JavascriptInterface
 		fun onLoginSubmit() {
-			println("Troupetent: SUBMIT EVENT")
-			loginViewModel.onEvent(LoginEvent.ToggleWebViewVisibility(false))
-			loginViewModel.onEvent(LoginEvent.LoggingIn)
+			loginViewModel.onEvent(LoginEvent.LoginFormSubmission)
 		}
 		
 		@JavascriptInterface
 		fun onCaptchaServed() {
-			println("Troupetent: CAPTCHA SERVED")
-			loginViewModel.onEvent(LoginEvent.ToggleWebViewVisibility(true))
+			loginViewModel.onEvent(LoginEvent.CaptchaServed)
 		}
 	}
 	
@@ -38,7 +36,7 @@ class BandcampWebViewClient(
 	
 	fun goHome() {
 		if (clientView.url != loginUrl) {
-			loginViewModel.onEvent(LoginEvent.ToggleWebViewVisibility(false))
+			loginViewModel.onEvent(LoginEvent.WebViewPageLoading)
 			clientView.loadUrl(loginUrl)
 		}
 	}
@@ -48,7 +46,28 @@ class BandcampWebViewClient(
 	private fun getBandcampCookies() {
 		val cookies = cookieManager.getCookie(baseUrl)
 		
-		loginViewModel.parseBandcampCookies(cookies, localContext)
+		loginViewModel.parseRawBandcampCookies(cookies, localContext)
+	}
+	
+	override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+		super.onPageStarted(view, url, favicon)
+		
+		loginViewModel.onEvent(LoginEvent.WebViewPageLoading)
+	}
+	
+	private val loginJsPayload = localContext.assets
+		.open("www/loginPayload.js")
+		.bufferedReader()
+		.use(BufferedReader::readText)
+	
+	override fun onPageFinished(view: WebView?, url: String?) {
+		super.onPageFinished(view!!, url!!)
+		
+		if (url == loginUrl) {
+			view.evaluateJavascript(loginJsPayload, null)
+		}
+		
+		loginViewModel.onEvent(LoginEvent.WebViewPageLoaded)
 	}
 	
 	override fun shouldInterceptRequest(
@@ -62,19 +81,5 @@ class BandcampWebViewClient(
 		}
 		
 		return null
-	}
-	
-	private val loginJsPayload = localContext.assets
-		.open("www/loginPayload.js")
-		.bufferedReader()
-		.use(BufferedReader::readText)
-	
-	override fun onPageFinished(view: WebView?, url: String?) {
-		super.onPageFinished(view!!, url!!)
-		
-		if (url == loginUrl) {
-			loginViewModel.onEvent(LoginEvent.ToggleWebViewVisibility(isVisible = true))
-			view.evaluateJavascript(loginJsPayload, null)
-		}
 	}
 }
