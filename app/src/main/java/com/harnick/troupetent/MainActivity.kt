@@ -5,60 +5,44 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.core.view.WindowCompat
-import com.harnick.troupetent.domain.model.AppSettings
-import com.harnick.troupetent.domain.repository.EncRepo
-import com.harnick.troupetent.domain.repository.SettingsRepo
-import com.harnick.troupetent.presentation.screens.NavGraphs
-import com.harnick.troupetent.presentation.screens.destinations.LibraryScreenDestination
-import com.harnick.troupetent.presentation.screens.destinations.OnboardingScreenDestination
-import com.harnick.troupetent.presentation.ui.theme.TroupetentTheme
+import com.harnick.troupetent.core.app_settings.domain.model.AppSettings
+import com.harnick.troupetent.core.app_settings.domain.repository.SettingsRepo
+import com.harnick.troupetent.core.user_data.domain.model.BandcampUserData
+import com.harnick.troupetent.core.user_data.domain.repository.UserDataRepo
+import com.harnick.troupetent.core.util.theme.TroupetentTheme
+import com.harnick.troupetent.destinations.LibraryScreenDestination
+import com.harnick.troupetent.destinations.OnboardingScreenDestination
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.io.File
-import java.io.IOException
+import kotlinx.coroutines.flow.filterNotNull
 import javax.inject.Inject
+
+// TODO: Check for when Room team fix their null on init bug.
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-	
-	@Inject
-	lateinit var encRepo: EncRepo
-	
 	@Inject
 	lateinit var settingsRepo: SettingsRepo
+	
+	@Inject
+	lateinit var userDataRepo: UserDataRepo
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		
 		WindowCompat.setDecorFitsSystemWindows(window, false)
 		
-		val settingsFlow = settingsRepo.loadSettings()
-		
-		runBlocking {
-			if (settingsFlow.first() == null) {
-				launch(Dispatchers.IO) { settingsRepo.updateSettings(AppSettings()) }
-			}
-		}
-		
+		val appSettingsFlow = settingsRepo.loadSettings().filterNotNull()
+		val userDataFlow = userDataRepo.loadUserData().filterNotNull()
 		
 		setContent {
-			val appSettings = settingsFlow.collectAsState(AppSettings()).value
+			val appSettings = appSettingsFlow.collectAsState(AppSettings()).value
+			val userData = userDataFlow.collectAsState(BandcampUserData()).value
 			
-			val isLoggedIn = try {
-				encRepo.decryptData(
-					File(applicationContext.dataDir, "bandcamp_token_enc")
-				).isNotEmpty()
-			} catch (e: IOException) {
-				false
-			}
+			val startRoute =
+				if (userData.userToken == null) OnboardingScreenDestination else LibraryScreenDestination
 			
-			val startRoute = if (isLoggedIn) LibraryScreenDestination else OnboardingScreenDestination
-			
-			TroupetentTheme(appSettings!!.appTheme) {
+			TroupetentTheme(appSettings.appTheme) {
 				DestinationsNavHost(navGraph = NavGraphs.root, startRoute = startRoute)
 			}
 		}

@@ -1,6 +1,7 @@
 plugins {
 	id 'com.android.application'
 	id 'org.jetbrains.kotlin.android'
+	id 'org.jmailen.kotlinter'
 	id 'com.google.devtools.ksp'
 	id 'org.jetbrains.kotlin.kapt'
 	id 'com.google.dagger.hilt.android'
@@ -34,15 +35,16 @@ android {
 		}
 	}
 
-	applicationVariants.all { variant ->
-		kotlin.sourceSets {
-			getByName(variant.name) {
-				kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
+	applicationVariants.all {
+		sourceSets {
+			getByName(name) {
+				kotlin.srcDir("build/generated/ksp/$name/kotlin")
 			}
 		}
 	}
 
 	compileOptions {
+		coreLibraryDesugaringEnabled true
 		sourceCompatibility JavaVersion.VERSION_1_8
 		targetCompatibility JavaVersion.VERSION_1_8
 	}
@@ -56,7 +58,7 @@ android {
 	}
 
 	composeOptions {
-		kotlinCompilerExtensionVersion '1.3.0-rc02'
+		kotlinCompilerExtensionVersion '1.3.2'
 	}
 
 	packagingOptions {
@@ -68,16 +70,11 @@ android {
 }
 
 dependencies {
-	implementation 'androidx.core:core-ktx:1.9.0'
-	implementation 'androidx.activity:activity-compose:1.6.1'
-	implementation 'androidx.appcompat:appcompat:1.5.1'
+	coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
 
 	// Accompanist
 	implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
 	implementation "com.google.accompanist:accompanist-webview:$accompanist_version"
-
-	// Android Request Inspector
-	implementation 'com.github.acsbendi:Android-Request-Inspector-WebView:1.0.2'
 
 	// Coil
 	implementation "io.coil-kt:coil-base:$coil_version"
@@ -100,11 +97,15 @@ dependencies {
 	kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
 	// Jetpack
-	implementation "androidx.security:security-crypto:1.1.0-alpha04"
+	implementation 'androidx.activity:activity-compose:1.6.1'
+	implementation 'androidx.appcompat:appcompat:1.6.0'
+	implementation 'androidx.core:core-ktx:1.9.0'
+	implementation "androidx.core:core-splashscreen:1.0.0"
 
 	// KotlinX
 	implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
-	implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3"
+	implementation "org.jetbrains.kotlinx:kotlinx-serialization-cbor:$kotlinx_serialization_version"
+	implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinx_serialization_version"
 
 	// Ktor
 	implementation "io.ktor:ktor-client-android:$ktor_version"
@@ -113,11 +114,12 @@ dependencies {
 	implementation "io.ktor:ktor-serialization-kotlinx-json:$ktor_version"
 
 	// Lifecycles
-	implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
-	implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+	implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+	implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+	implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
 	// Material Design
-	implementation 'androidx.compose.material3:material3:1.1.0-alpha03'
+	implementation 'androidx.compose.material3:material3:1.1.0-alpha04'
 	implementation 'androidx.compose.material:material-icons-core:1.3.1'
 	implementation 'androidx.compose.material:material-icons-extended:1.3.1'
 

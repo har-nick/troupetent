@@ -1,7 +1,7 @@
 package com.harnick.troupetent.di
 
-import com.harnick.troupetent.data.repository.EncRepoImpl
-import com.harnick.troupetent.domain.repository.EncRepo
+import com.harnick.troupetent.core.encryption.data.repository.EncryptionRepoImpl
+import com.harnick.troupetent.core.encryption.domain.repository.EncryptionRepo
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,6 +14,6 @@ abstract class Bindings {
 	@Binds
 	@Singleton
 	abstract fun bindEncRepo(
-		encRepoImpl: EncRepoImpl
-	): EncRepo
+		encRepoImpl: EncryptionRepoImpl
+	): EncryptionRepo
 }

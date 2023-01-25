@@ -3,15 +3,12 @@ package com.harnick.troupetent.di
 import android.content.Context
 import androidx.room.Room
 import coil.ImageLoader
-import com.harnick.troupetent.data.model.room.settings.SettingsDatabase
-import com.harnick.troupetent.data.remote.bandcamp.BandcampApi
-import com.harnick.troupetent.data.repository.SettingsRepoImpl
-import com.harnick.troupetent.domain.repository.EncRepo
-import com.harnick.troupetent.domain.repository.SettingsRepo
-import com.harnick.troupetent.domain.use_cases.*
-import com.harnick.troupetent.domain.use_cases.collated.LibraryUseCases
-import com.harnick.troupetent.domain.use_cases.collated.LoginUseCases
-import com.harnick.troupetent.domain.use_cases.collated.PlayerUseCases
+import com.harnick.troupetent.core.app_settings.data.model.room.SettingsDatabase
+import com.harnick.troupetent.core.app_settings.data.repository.SettingsRepoImpl
+import com.harnick.troupetent.core.app_settings.domain.repository.SettingsRepo
+import com.harnick.troupetent.core.user_data.data.model.room.bandcamp.BandcampUserDataDatabase
+import com.harnick.troupetent.core.user_data.data.repository.UserDataRepoImpl
+import com.harnick.troupetent.core.user_data.domain.repository.UserDataRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,45 +36,12 @@ object AppModule {
 	
 	@Provides
 	@Singleton
-	fun provideLibraryUseCases(
-		api: BandcampApi,
-		@ApplicationContext appContext: Context,
-	): LibraryUseCases {
-		return LibraryUseCases(
-			GetBandcampCollectionItemsUseCase(api, appContext),
-			GetBandcampCollectionSummaryUseCase(api, appContext),
-			GetBandcampUserDataUseCase(api, appContext)
-		)
-	}
-	
-	@Provides
-	@Singleton
 	fun provideKtorClient(): HttpClient {
 		return HttpClient(Android) {
 			install(ContentNegotiation) {
 				json(Json)
 			}
 		}
-	}
-	
-	@Provides
-	@Singleton
-	fun provideLoginUseCases(
-		encRepo: EncRepo
-	): LoginUseCases {
-		return LoginUseCases(
-			SaveBandcampLoginTokenUseCase(encRepo)
-		)
-	}
-	
-	@Provides
-	@Singleton
-	fun providePlayerUseCases(
-		api: BandcampApi
-	): PlayerUseCases {
-		return PlayerUseCases(
-			GetBandcampStreamUrl(api)
-		)
 	}
 	
 	@Provides
@@ -96,5 +60,23 @@ object AppModule {
 	@Singleton
 	fun provideSettingsRepo(database: SettingsDatabase): SettingsRepo {
 		return SettingsRepoImpl(database.settingsDao)
+	}
+	
+	@Provides
+	@Singleton
+	fun provideUserDataDatabase(
+		@ApplicationContext appContext: Context
+	): BandcampUserDataDatabase {
+		return Room.databaseBuilder(
+			appContext,
+			BandcampUserDataDatabase::class.java,
+			BandcampUserDataDatabase.DB_NAME
+		).build()
+	}
+	
+	@Provides
+	@Singleton
+	fun provideUserDataRepo(database: BandcampUserDataDatabase): UserDataRepo {
+		return UserDataRepoImpl(database.bandcampUserDataDao)
 	}
 }
