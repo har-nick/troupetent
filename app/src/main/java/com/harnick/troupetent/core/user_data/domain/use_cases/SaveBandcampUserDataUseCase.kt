@@ -5,7 +5,6 @@ import com.harnick.troupetent.core.encryption.domain.repository.EncryptionRepo
 import com.harnick.troupetent.core.user_data.domain.model.BandcampUserData
 import com.harnick.troupetent.core.user_data.domain.repository.UserDataRepo
 import com.harnick.troupetent.core.util.Resource
-import io.ktor.utils.io.*
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -22,7 +21,7 @@ class SaveBandcampUserDataUseCase @Inject constructor(
 			
 			val collectionSummaryEntity = bandcampApi.fetchCollectionSummary(token)
 			
-			val username = collectionSummaryEntity.collectionSummaryEntity.fanUsername
+			val username = collectionSummaryEntity.bandcampCollectionSummaryEntity.fanUsername
 			
 			val userPageHTML = bandcampApi.fetchUserPage(username)
 			
@@ -46,7 +45,6 @@ class SaveBandcampUserDataUseCase @Inject constructor(
 			
 			emit(Resource.Success())
 		} catch (e: Exception) {
-			e.printStack()
 			emit(Resource.Error("${e.message}"))
 		}
 	}
