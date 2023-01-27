@@ -11,17 +11,6 @@ fun Context.findActivity(): Activity? = when (this) {
 	else -> null
 }
 
-@Suppress("UNCHECKED_CAST")
-fun <T : Serializable> fromByteArray(byteArray: ByteArray): T {
-	val inputStream = ByteArrayInputStream(byteArray)
-	val objectInput = ObjectInputStream(inputStream)
-	val result = objectInput.readObject() as T
-	
-	objectInput.close()
-	inputStream.close()
-	return result
-}
-
 fun Serializable.toByteArray(): ByteArray {
 	val outputStream = ByteArrayOutputStream()
 	val objectOutput = ObjectOutputStream(outputStream)
@@ -37,6 +26,13 @@ fun Serializable.toByteArray(): ByteArray {
 	return result
 }
 
-fun closestDivisibleNumber(dividend: Int, divisor: Int): Int {
-	return (dividend + divisor) - (dividend % divisor)
+@Suppress("UNCHECKED_CAST")
+fun <T : Serializable> fromByteArray(data: ByteArray): T {
+	val inputStream = ByteArrayInputStream(data)
+	val objectInput = ObjectInputStream(inputStream)
+	val result = objectInput.readObject() as T
+	
+	objectInput.close()
+	inputStream.close()
+	return result
 }
