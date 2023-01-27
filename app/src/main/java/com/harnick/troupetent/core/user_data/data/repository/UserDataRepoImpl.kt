@@ -19,19 +19,6 @@ class UserDataRepoImpl @Inject constructor(
 			.collect()
 	}
 	
-	override suspend fun getUserToken(): Pair<ByteArray, ByteArray>? {
-		var encryptedToken: Pair<ByteArray, ByteArray>? = null
-		
-		userDataDao.loadUserData()
-			.filterNotNull()
-			.flowOn(Dispatchers.IO)
-			.collect { data ->
-				encryptedToken = data.userToken
-			}
-		
-		return encryptedToken
-	}
-	
 	override fun loadUserData(): Flow<BandcampUserData> {
 		return userDataDao.loadUserData()
 			.filterNotNull()

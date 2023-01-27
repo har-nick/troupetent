@@ -5,6 +5,8 @@ import com.harnick.troupetent.core.encryption.domain.repository.EncryptionRepo
 import com.harnick.troupetent.core.user_data.domain.repository.UserDataRepo
 import com.harnick.troupetent.core.util.Resource
 import com.harnick.troupetent.library.domain.bandcamp.toBandcampCollectionSummary
+import io.ktor.utils.io.*
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -17,7 +19,7 @@ class GetBandcampCollectionSummaryUseCase @Inject constructor(
 		try {
 			emit(Resource.Fetching("Syncing library data..."))
 			
-			val encryptedToken = userDataRepo.getUserToken()
+			val encryptedToken = userDataRepo.loadUserData().first().userToken
 			
 			val token: String = if (encryptedToken != null) {
 				encryptionRepo.decryptData(encryptedToken.first, encryptedToken.second)
@@ -29,6 +31,7 @@ class GetBandcampCollectionSummaryUseCase @Inject constructor(
 			
 			emit(Resource.Success(summary))
 		} catch (e: Exception) {
+			e.printStack()
 			emit(Resource.Error("${e.message}"))
 		}
 	}
