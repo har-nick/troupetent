@@ -15,25 +15,35 @@ import javax.inject.Inject
 
 class EncryptionRepoImpl @Inject constructor() : EncryptionRepo {
 	
-	private val keyGenerator =
-		KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
-	private val keyGenParameterSpec = KeyGenParameterSpec.Builder(
-		"TroupetentKeyAlias",
-		KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-	)
-		.setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-		.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-		.build()
+	private companion object {
+		const val ALGORITHM = KeyProperties.KEY_ALGORITHM_AES
+		const val BLOCK_MODE = KeyProperties.BLOCK_MODE_GCM
+		const val PADDING = KeyProperties.ENCRYPTION_PADDING_NONE
+		const val TRANSFORMATION = "$ALGORITHM/$BLOCK_MODE/$PADDING"
+	}
 	
 	private val keystore = KeyStore.getInstance("AndroidKeyStore")
+	private val keyGenerator = KeyGenerator.getInstance(ALGORITHM, "AndroidKeyStore")
+	private val keyGenParameterSpec = KeyGenParameterSpec
+		.Builder(
+			"TroupetentKeyAlias",
+			KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+		)
+		.setBlockModes(BLOCK_MODE)
+		.setEncryptionPaddings(PADDING)
+		.setRandomizedEncryptionRequired(true)
+		.build()
 	
-	private val cipher = Cipher.getInstance("AES/GCM/NoPadding")
 	
+	private val cipher = Cipher.getInstance(TRANSFORMATION)
 	
 	init {
-		keyGenerator.init(keyGenParameterSpec)
-		keyGenerator.generateKey()
 		keystore.load(null)
+		
+		if (!keystore.containsAlias("TroupetentKeyAlias")) {
+			keyGenerator.init(keyGenParameterSpec)
+			keyGenerator.generateKey()
+		}
 	}
 	
 	private fun getKey(): SecretKey {
@@ -57,6 +67,7 @@ class EncryptionRepoImpl @Inject constructor() : EncryptionRepo {
 		val ivSpec = GCMParameterSpec(128, ivBytes)
 		
 		cipher.init(Cipher.DECRYPT_MODE, getKey(), ivSpec)
+		
 		val decryptedArray: ByteArray = cipher.doFinal(data)
 		return fromByteArray(decryptedArray) as T
 	}
