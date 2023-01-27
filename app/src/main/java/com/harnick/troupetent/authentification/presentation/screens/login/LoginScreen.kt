@@ -29,7 +29,7 @@ fun LoginScreen(
 	
 	val activity = localContext.findActivity()
 	val verificationIntent = activity?.intent
-	val startUrl = verificationIntent?.data ?: "https://bandcamp.com/login"
+	val startUrl = (verificationIntent?.data ?: "https://bandcamp.com/login").toString()
 	
 	LaunchedEffect(true) {
 		loginViewModel.uiEvent.collect { event ->
@@ -48,21 +48,16 @@ fun LoginScreen(
 	) {
 		if (loginState.webViewEnabled) {
 			BandcampWebView(
-				loginUrl = startUrl.toString(),
-				loginViewModel = loginViewModel,
-				webViewIsVisible = loginState.webViewVisible
+				startUrl,
+				loginViewModel::onEvent,
+				loginState.webViewVisible,
 			)
 		}
 		
-		if (!loginState.status.isNullOrEmpty()) {
-			LoginStateNotifier(status = loginState.status, retryLoginEvent = {})
-		} else if (!loginState.error.isNullOrEmpty()) {
-			LoginStateNotifier(
-				status = loginState.error,
-				inProgress = false,
-				isError = true,
-				retryLoginEvent = { loginViewModel.onEvent(LoginEvent.RetryLogin) }
-			)
-		}
+		LoginStateNotifier(
+			loginState.status,
+			loginState.error,
+			loginViewModel::onEvent
+		)
 	}
 }

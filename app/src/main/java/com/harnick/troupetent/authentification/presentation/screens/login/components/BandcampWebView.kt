@@ -24,27 +24,27 @@ import com.google.accompanist.web.rememberWebViewNavigator
 import com.google.accompanist.web.rememberWebViewState
 import com.harnick.troupetent.authentification.domain.BandcampWebChromeClient
 import com.harnick.troupetent.authentification.domain.BandcampWebViewClient
-import com.harnick.troupetent.authentification.presentation.screens.login.LoginViewModel
+import com.harnick.troupetent.authentification.presentation.screens.login.LoginEvent
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun BandcampWebView(
-	loginUrl: String,
-	loginViewModel: LoginViewModel,
+	startUrl: String,
+	handleEvent: (event: LoginEvent) -> Unit,
 	webViewIsVisible: Boolean
 ) {
-	val context = LocalContext.current
+	val localContext = LocalContext.current
 	
 	val webViewAlpha: Float by animateFloatAsState(
 		if (webViewIsVisible) 1f else 0f,
-//	OnPageFinished != DOM painted. Delay just helps a bit.
+		//	OnPageFinished != DOM painted. Delay just helps a bit.
 		tween(300, 100)
 	)
-	val webViewState = rememberWebViewState(loginUrl)
+	val webViewState = rememberWebViewState(startUrl)
 	val webViewNavigator = rememberWebViewNavigator()
-	val webChromeClient = BandcampWebChromeClient(loginViewModel)
+	val webChromeClient = BandcampWebChromeClient(handleEvent)
 	val webViewClient = remember {
-		BandcampWebViewClient(loginViewModel, context)
+		BandcampWebViewClient(handleEvent, localContext)
 	}
 	
 	Box(

@@ -7,12 +7,11 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import com.google.accompanist.web.AccompanistWebViewClient
 import com.harnick.troupetent.authentification.presentation.screens.login.LoginEvent
-import com.harnick.troupetent.authentification.presentation.screens.login.LoginViewModel
 import java.io.BufferedReader
 
 class BandcampWebViewClient(
-	private val loginViewModel: LoginViewModel,
-	private val localContext: Context,
+	private val handleEvent: (LoginEvent) -> Unit,
+	localContext: Context,
 ) : AccompanistWebViewClient() {
 	
 	private companion object {
@@ -23,12 +22,12 @@ class BandcampWebViewClient(
 	inner class BandcampWebViewInterface {
 		@JavascriptInterface
 		fun onLoginSubmit() {
-			loginViewModel.onEvent(LoginEvent.LoginFormSubmission)
+			handleEvent(LoginEvent.LoginFormSubmission)
 		}
 		
 		@JavascriptInterface
 		fun onCaptchaServed() {
-			loginViewModel.onEvent(LoginEvent.CaptchaServed)
+			handleEvent(LoginEvent.CaptchaServed)
 		}
 	}
 	
@@ -38,7 +37,7 @@ class BandcampWebViewClient(
 	
 	fun goHome() {
 		if (clientView.url != loginUrl) {
-			loginViewModel.onEvent(LoginEvent.WebViewPageLoading)
+			handleEvent(LoginEvent.WebViewPageLoading)
 			clientView.loadUrl(loginUrl)
 		}
 	}
@@ -46,7 +45,7 @@ class BandcampWebViewClient(
 	override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
 		super.onPageStarted(view, url, favicon)
 		
-		loginViewModel.onEvent(LoginEvent.WebViewPageLoading)
+		handleEvent(LoginEvent.WebViewPageLoading)
 	}
 	
 	private val loginJsPayload = localContext.assets
@@ -63,6 +62,6 @@ class BandcampWebViewClient(
 		
 		val rawCookies = cookieManager.getCookie(baseUrl)
 		
-		loginViewModel.onEvent(LoginEvent.WebViewPageLoaded(rawCookies))
+		handleEvent(LoginEvent.WebViewPageLoaded(rawCookies))
 	}
 }

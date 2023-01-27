@@ -3,10 +3,9 @@ package com.harnick.troupetent.authentification.domain
 import android.webkit.ConsoleMessage
 import com.google.accompanist.web.AccompanistWebChromeClient
 import com.harnick.troupetent.authentification.presentation.screens.login.LoginEvent
-import com.harnick.troupetent.authentification.presentation.screens.login.LoginViewModel
 
 class BandcampWebChromeClient(
-	private val viewModel: LoginViewModel
+	private val handleEvent: (LoginEvent) -> Unit
 ) : AccompanistWebChromeClient() {
 	
 	companion object {
@@ -28,7 +27,7 @@ class BandcampWebChromeClient(
 
 //		Console messages seem to repeat a dozen times. Idk.
 			if (error != lastErrorMessage) {
-				viewModel.onEvent(LoginEvent.LoginError(error))
+				handleEvent(LoginEvent.LoginError(error))
 				lastErrorMessage = error
 				return true
 			}
