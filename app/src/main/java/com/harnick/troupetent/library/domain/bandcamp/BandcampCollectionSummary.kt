@@ -1,6 +1,6 @@
 package com.harnick.troupetent.library.domain.bandcamp
 
-import com.harnick.troupetent.library.data.dto.collection_summary.CollectionSummaryEntity
+import com.harnick.troupetent.library.data.dto.collection_summary.BandcampCollectionSummaryEntity
 import com.harnick.troupetent.library.data.dto.collection_summary.TralbumLookupEntity
 import kotlinx.serialization.Serializable
 
@@ -11,7 +11,7 @@ data class BandcampCollectionSummary(
 	val username: String
 )
 
-fun CollectionSummaryEntity.toBandcampCollectionSummary(): BandcampCollectionSummary {
+fun BandcampCollectionSummaryEntity.toBandcampCollectionSummary(): BandcampCollectionSummary {
 	return BandcampCollectionSummary(
 		fanId,
 		itemLookupList,
