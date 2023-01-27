@@ -1,47 +1,35 @@
 package com.harnick.troupetent.library.domain.use_cases
 
-import android.content.Context
-import com.harnick.troupetent.library.data.BandcampLibraryApi
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.harnick.troupetent.core.api.bandcamp.data.BandcampApi
+import com.harnick.troupetent.core.encryption.domain.repository.EncryptionRepo
+import com.harnick.troupetent.core.user_data.domain.repository.UserDataRepo
+import com.harnick.troupetent.core.util.Resource
+import com.harnick.troupetent.library.domain.bandcamp.toBandcampCollectionSummary
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class GetBandcampCollectionSummaryUseCase @Inject constructor(
-	@ApplicationContext private val appContext: Context,
-	private val bandcampLibraryApi: BandcampLibraryApi
+	private val bandcampApi: BandcampApi,
+	private val encryptionRepo: EncryptionRepo,
+	private val userDataRepo: UserDataRepo
 ) {
-//	operator fun invoke() = flow {
-//		lateinit var hoistedResponseBody: String
-//
-//		try {
-//			emit(Resource.Fetching())
-//
-//			val response = bandcampLibraryApi.fetchCollectionSummary()
-//
-//			hoistedResponseBody = response.bodyAsText()
-//
-//			val serializedSummary: CollectionSummaryResponseEntity =
-//				Json.decodeFromString(hoistedResponseBody)
-//
-//			emit(Resource.Success(serializedSummary.collectionSummaryEntity.toBandcampCollectionSummary()))
-//		} catch (e: SerializationException) {
-//			val serializedError: ErrorResponseEntity =
-//				Json.decodeFromString(hoistedResponseBody)
-//
-//			emit(Resource.Error(serializedError.errorMessage))
-//		} catch (e: Exception) {
-//			emit(Resource.Loading())
-//			val cachedSummaryUri = java.io.File(appContext.cacheDir, "summary.json")
-//
-//			if (!cachedSummaryUri.isFile) {
-//				throw CustomExceptions.BandcampLibrarySyncRequired
-//			}
-//
-//			val serializedSummaryCache: BandcampCollectionSummary =
-//				Json.decodeFromString(cachedSummaryUri.readText())
-//
-//			emit(Resource.Success(serializedSummaryCache))
-//		} catch (e: Exception) {
-//			emit(Resource.Error("No cached files available"))
-//		}
-//	}
+	operator fun invoke() = flow {
+		try {
+			emit(Resource.Fetching("Syncing library data..."))
+			
+			val encryptedToken = userDataRepo.getUserToken()
+			
+			val token: String = if (encryptedToken != null) {
+				encryptionRepo.decryptData(encryptedToken.first, encryptedToken.second)
+			} else throw Exception("Missing user token.")
+			
+			val summaryResponseEntity = bandcampApi.fetchCollectionSummary(token)
+			val summary =
+				summaryResponseEntity.bandcampCollectionSummaryEntity.toBandcampCollectionSummary()
+			
+			emit(Resource.Success(summary))
+		} catch (e: Exception) {
+			emit(Resource.Error("${e.message}"))
+		}
+	}
 }
