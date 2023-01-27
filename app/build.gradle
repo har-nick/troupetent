@@ -104,7 +104,6 @@ dependencies {
 
 	// KotlinX
 	implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
-	implementation "org.jetbrains.kotlinx:kotlinx-serialization-cbor:$kotlinx_serialization_version"
 	implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinx_serialization_version"
 
 	// Ktor

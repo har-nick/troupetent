@@ -2,9 +2,7 @@ package com.harnick.troupetent.core.user_data.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.cbor.ByteString
 
 @Entity
 @Serializable
