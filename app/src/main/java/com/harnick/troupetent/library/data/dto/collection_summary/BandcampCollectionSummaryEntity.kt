@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CollectionSummaryEntity(
+data class BandcampCollectionSummaryEntity(
 	@SerialName("fan_id")
 	val fanId: Long,
 	@SerialName("follows")

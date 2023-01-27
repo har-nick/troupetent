@@ -10,5 +10,5 @@ data class CollectionItemsRequestEntity(
 	@SerialName("older_than_token")
 	val olderThanToken: String,
 	@SerialName("count")
-	val itemCount: Int
+	val itemCount: Long
 )

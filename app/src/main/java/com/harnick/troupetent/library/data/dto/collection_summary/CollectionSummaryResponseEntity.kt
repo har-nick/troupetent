@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CollectionSummaryResponseEntity(
 	@SerialName("collection_summary")
-	val collectionSummaryEntity: CollectionSummaryEntity,
+	val bandcampCollectionSummaryEntity: BandcampCollectionSummaryEntity,
 	@SerialName("fan_id")
 	val fanId: Long
 )
