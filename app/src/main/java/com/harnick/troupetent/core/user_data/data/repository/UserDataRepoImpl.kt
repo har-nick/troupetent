@@ -12,10 +12,9 @@ class UserDataRepoImpl @Inject constructor(
 ) : UserDataRepo {
 	override fun getLoginStatus(): Flow<Boolean> = flow {
 		userDataDao.loadUserData()
-			.filterNotNull()
 			.flowOn(Dispatchers.IO)
 			.onEach { data ->
-				emit(data.userToken == null)
+				emit(data?.userToken != null)
 			}
 			.collect()
 	}

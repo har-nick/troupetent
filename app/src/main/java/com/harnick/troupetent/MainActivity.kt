@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
 				splashScreenVisible = false
 				
 				TroupetentTheme(appSettings.appTheme) {
-					DestinationsNavHost(navGraph = NavGraphs.root, startRoute = startRoute)
+					DestinationsNavHost(NavGraphs.root, startRoute = startRoute)
 				}
 			}
 		}

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface BandcampUserDataDao {
 	
 	@Query("SELECT * FROM BandcampUserData")
-	fun loadUserData(): Flow<BandcampUserData>
+	fun loadUserData(): Flow<BandcampUserData?>
 	
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun updateBandcampUserData(bandcampUserData: BandcampUserData)
