@@ -10,11 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.harnick.troupetent.authentification.presentation.screens.onboarding.OnboardingEvent
 
 @Composable
 fun OnboardingSplash(
-	openDefaultLinks: () -> Unit,
-	openWebView: () -> Unit
+	handleEvent: (OnboardingEvent) -> Unit
 ) {
 	if (Build.VERSION.SDK_INT > 30) {
 		Text(
@@ -31,10 +31,10 @@ fun OnboardingSplash(
 			fontSize = MaterialTheme.typography.bodyLarge.fontSize
 		)
 		
-		SquaredButton(openDefaultLinks, 200.dp, "Open Supported Links")
+		SquaredButton({ handleEvent(OnboardingEvent.OpenDefaultLinks) }, 200.dp, "Open Supported Links")
 		
 		Spacer(Modifier.height(5.dp))
 	}
 	
-	SquaredButton(openWebView, 200.dp, "Login to Bandcamp")
+	SquaredButton({ handleEvent(OnboardingEvent.OpenDefaultLinks) }, 200.dp, "Login to Bandcamp")
 }

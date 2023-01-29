@@ -55,10 +55,7 @@ fun OnboardingScreen(
 			Arrangement.Center,
 			Alignment.CenterHorizontally
 		) {
-			OnboardingSplash(
-				{ onboardingViewModel.onEvent(OnboardingEvent.OpenDefaultLinks) },
-				{ onboardingViewModel.onEvent(OnboardingEvent.OpenWebView) }
-			)
+			OnboardingSplash(onboardingViewModel::onEvent)
 		}
 	}
 }
