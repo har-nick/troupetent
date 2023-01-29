@@ -8,7 +8,7 @@ plugins {
 	id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
-static def versionCodeDate() {
+static def getCurrentDate() {
 	return new Date().format("YYYY-MM-DD").toString()
 }
 
@@ -20,7 +20,7 @@ android {
 		minSdk 23
 		targetSdk 33
 		versionCode 1
-		versionName versionCodeDate()
+		versionName getCurrentDate()
 
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		vectorDrawables {
