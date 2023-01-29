@@ -30,9 +30,9 @@ class MainActivity : ComponentActivity() {
 		super.onCreate(savedInstanceState)
 		WindowCompat.setDecorFitsSystemWindows(window, false)
 		
-		var splashScreenVisible: Boolean by mutableStateOf(true)
+		var isSplashScreenVisible by mutableStateOf(true)
 		
-		installSplashScreen().setKeepOnScreenCondition { splashScreenVisible }
+		installSplashScreen().setKeepOnScreenCondition { isSplashScreenVisible }
 		
 		setContent {
 			val appSettings: AppSettings by settingsRepo.loadSettings().collectAsState(AppSettings())
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 			}
 			
 			if (startRoute != null) {
-				splashScreenVisible = false
+				isSplashScreenVisible = false
 				
 				TroupetentTheme(appSettings.appTheme) {
 					DestinationsNavHost(NavGraphs.root, startRoute = startRoute)
