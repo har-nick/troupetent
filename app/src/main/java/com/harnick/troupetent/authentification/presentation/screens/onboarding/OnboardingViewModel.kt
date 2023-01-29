@@ -1,8 +1,5 @@
 package com.harnick.troupetent.authentification.presentation.screens.onboarding
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,9 +12,6 @@ import javax.inject.Inject
 class OnboardingViewModel @Inject constructor(
 
 ) : ViewModel() {
-	var state by mutableStateOf(OnboardingState())
-		private set
-	
 	private val _uiEvent = Channel<OnboardingEvent>()
 	val uiEvent = _uiEvent.receiveAsFlow()
 	
