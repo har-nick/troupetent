@@ -36,5 +36,5 @@ fun OnboardingSplash(
 		Spacer(Modifier.height(5.dp))
 	}
 	
-	SquaredButton({ handleEvent(OnboardingEvent.OpenDefaultLinks) }, 200.dp, "Login to Bandcamp")
+	SquaredButton({ handleEvent(OnboardingEvent.OpenWebView) }, 200.dp, "Login to Bandcamp")
 }
