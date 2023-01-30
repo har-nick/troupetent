@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.Flow
 interface UserDataRepo {
 	fun getLoginStatus(): Flow<Boolean>
 	
-	fun loadUserData(): Flow<BandcampUserData>
+	fun loadUserData(): Flow<BandcampUserData?>
+	
+	fun loadEncryptedToken(): Flow<Pair<ByteArray, ByteArray>>
 	
 	suspend fun updateUserData(userData: BandcampUserData)
 }

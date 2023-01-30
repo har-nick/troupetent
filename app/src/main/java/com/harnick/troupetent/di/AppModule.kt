@@ -3,10 +3,10 @@ package com.harnick.troupetent.di
 import android.content.Context
 import androidx.room.Room
 import coil.ImageLoader
-import com.harnick.troupetent.core.app_settings.data.model.room.SettingsDatabase
+import com.harnick.troupetent.core.app_settings.data.local.SettingsDatabase
 import com.harnick.troupetent.core.app_settings.data.repository.SettingsRepoImpl
 import com.harnick.troupetent.core.app_settings.domain.repository.SettingsRepo
-import com.harnick.troupetent.core.user_data.data.model.room.bandcamp.BandcampUserDataDatabase
+import com.harnick.troupetent.core.user_data.data.local.bandcamp.BandcampUserDataDatabase
 import com.harnick.troupetent.core.user_data.data.repository.UserDataRepoImpl
 import com.harnick.troupetent.core.user_data.domain.repository.UserDataRepo
 import dagger.Module

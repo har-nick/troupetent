@@ -1,8 +1,5 @@
 package com.harnick.troupetent.authentification.presentation.screens.login
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.harnick.troupetent.authentification.presentation.screens.login.LoginEvent.*
@@ -12,9 +9,7 @@ import com.harnick.troupetent.core.util.Resource.Success
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,8 +17,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
 	private val saveBandcampUserDataUseCase: SaveBandcampUserDataUseCase
 ) : ViewModel() {
-	var state by mutableStateOf(LoginState())
-		private set
+	private val _state = MutableStateFlow(LoginState())
+	val state = _state.asStateFlow()
 	
 	private val _uiEvent = Channel<LoginEvent>()
 	val uiEvent = _uiEvent.receiveAsFlow()
@@ -37,8 +32,8 @@ class LoginViewModel @Inject constructor(
 	fun onEvent(event: LoginEvent) {
 		when (event) {
 			is CaptchaServed -> {
-				if (!state.webViewVisible) {
-					state = state.copy(
+				if (!state.value.webViewVisible) {
+					_state.value = _state.value.copy(
 						webViewEnabled = true,
 						webViewVisible = true
 					)
@@ -46,7 +41,7 @@ class LoginViewModel @Inject constructor(
 			}
 			
 			is LoginError -> {
-				state = state.copy(
+				_state.value = _state.value.copy(
 					error = event.error,
 					status = null,
 					webViewEnabled = false,
@@ -55,7 +50,7 @@ class LoginViewModel @Inject constructor(
 			}
 			
 			is LoginFormSubmission -> {
-				state = state.copy(
+				_state.value = _state.value.copy(
 					status = "Logging in...",
 					webViewEnabled = true,
 					webViewVisible = false
@@ -63,7 +58,7 @@ class LoginViewModel @Inject constructor(
 			}
 			
 			is RetryLogin -> {
-				state = state.copy(
+				_state.value = _state.value.copy(
 					error = null,
 					status = null,
 					webViewEnabled = true,
@@ -80,7 +75,7 @@ class LoginViewModel @Inject constructor(
 			}
 			
 			is WebViewPageLoading -> {
-				state = state.copy(
+				_state.value = _state.value.copy(
 					webViewVisible = false
 				)
 			}
@@ -101,7 +96,7 @@ class LoginViewModel @Inject constructor(
 			.getValue("identity")
 		
 		if (token.isNullOrEmpty()) {
-			state = state.copy(
+			_state.value = _state.value.copy(
 				webViewVisible = true
 			)
 		} else if (!saveUserData(token).isActive) {
@@ -113,13 +108,13 @@ class LoginViewModel @Inject constructor(
 		saveBandcampUserDataUseCase(token)
 			.onEach { emission ->
 				if (emission is Error) {
-					state = state.copy(
+					_state.value = _state.value.copy(
 						error = emission.message
 					)
 				} else if (emission is Success) {
 					onEvent(UserDataSaved)
 				} else if (!emission.message.isNullOrEmpty()) {
-					state = state.copy(
+					_state.value = _state.value.copy(
 						status = emission.message
 					)
 				}

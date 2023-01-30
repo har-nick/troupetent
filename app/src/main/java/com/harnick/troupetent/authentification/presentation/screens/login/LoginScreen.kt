@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,7 +26,7 @@ fun LoginScreen(
 	loginViewModel: LoginViewModel = hiltViewModel()
 ) {
 	val localContext = LocalContext.current
-	val loginState = loginViewModel.state
+	val loginState = loginViewModel.state.collectAsState().value
 	
 	val activity = localContext.findActivity()
 	val verificationIntent = activity?.intent
