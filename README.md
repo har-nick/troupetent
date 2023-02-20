@@ -1,3 +1,5 @@
+## ⚠️ Currently migrating to Kotlin Multiplatform ⚠️
+
 # Troupetent
 
 A (barebones) Material You Bandcamp client for Android.
