@@ -1,0 +1,43 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.harnick.troupetent.androidApp-mergeDebugResources-38:/values-zh-rCN/values-zh-rCN.xml",
+            "map": [
+                {
+                    "source": "/home/harnick/.gradle/caches/transforms-3/d539237f08b872948739c12c093051f9/transformed/ui-1.3.1/res/values-zh-rCN/values-zh-rCN.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,182,258,343,434,511,585,662,740,815,880,945,1018,1093,1161,1227",
+                        "endColumns": "76,75,84,90,76,73,76,77,74,64,64,72,74,67,65,115",
+                        "endOffsets": "177,253,338,429,506,580,657,735,810,875,940,1013,1088,1156,1222,1338"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,182,258,343,434,511,585,662,740,815,880,945,1018,1093,1262,1328",
+                        "endColumns": "76,75,84,90,76,73,76,77,74,64,64,72,74,67,65,115",
+                        "endOffsets": "177,253,338,429,506,580,657,735,810,875,940,1013,1088,1156,1323,1439"
+                    }
+                },
+                {
+                    "source": "/home/harnick/.gradle/caches/transforms-3/38230a62be94dcabb19d67c35ba43360/transformed/core-1.8.0/res/values-zh-rCN/values-zh-rCN.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "16",
+                        "startColumns": "4",
+                        "startOffsets": "1161",
+                        "endColumns": "100",
+                        "endOffsets": "1257"
+                    }
+                }
+            ]
+        }
+    ]
+}

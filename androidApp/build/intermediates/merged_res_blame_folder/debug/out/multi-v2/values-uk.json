@@ -1,0 +1,43 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.harnick.troupetent.androidApp-mergeDebugResources-38:/values-uk/values-uk.xml",
+            "map": [
+                {
+                    "source": "/home/harnick/.gradle/caches/transforms-3/38230a62be94dcabb19d67c35ba43360/transformed/core-1.8.0/res/values-uk/values-uk.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "16",
+                        "startColumns": "4",
+                        "startOffsets": "1296",
+                        "endColumns": "100",
+                        "endOffsets": "1392"
+                    }
+                },
+                {
+                    "source": "/home/harnick/.gradle/caches/transforms-3/d539237f08b872948739c12c093051f9/transformed/ui-1.3.1/res/values-uk/values-uk.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,198,282,384,485,569,651,740,828,910,980,1051,1136,1224,1296,1366",
+                        "endColumns": "92,83,101,100,83,81,88,87,81,69,70,84,87,71,69,122",
+                        "endOffsets": "193,277,379,480,564,646,735,823,905,975,1046,1131,1219,1291,1361,1484"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,198,282,384,485,569,651,740,828,910,980,1051,1136,1224,1397,1467",
+                        "endColumns": "92,83,101,100,83,81,88,87,81,69,70,84,87,71,69,122",
+                        "endOffsets": "193,277,379,480,564,646,735,823,905,975,1046,1131,1219,1291,1462,1585"
+                    }
+                }
+            ]
+        }
+    ]
+}

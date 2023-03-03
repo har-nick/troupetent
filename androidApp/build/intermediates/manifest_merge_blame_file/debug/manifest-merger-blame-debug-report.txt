@@ -1,0 +1,95 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.harnick.troupetent"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+8-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml
+10
+11    <application
+11-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:4:5-17:19
+12        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+12-->[androidx.core:core:1.8.0] /home/harnick/.gradle/caches/transforms-3/38230a62be94dcabb19d67c35ba43360/transformed/core-1.8.0/AndroidManifest.xml:24:18-86
+13        android:debuggable="true"
+14        android:extractNativeLibs="false"
+15        android:icon="@android:mipmap/sym_def_app_icon"
+15-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:8:9-56
+16        android:label="Troupetent"
+16-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:5:9-35
+17        android:supportsRtl="true"
+17-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:6:9-35
+18        android:testOnly="true"
+19        android:theme="@style/AppTheme" >
+19-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:7:9-40
+20        <activity
+20-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:9:9-16:20
+21            android:name="com.harnick.troupetent.MainActivity"
+21-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:10:13-41
+22            android:exported="true" >
+22-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:11:13-36
+23            <intent-filter>
+23-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:12:13-15:29
+24                <action android:name="android.intent.action.MAIN" />
+24-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:13:17-69
+24-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:13:25-66
+25
+26                <category android:name="android.intent.category.LAUNCHER" />
+26-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:14:17-77
+26-->/home/harnick/Projects/Troupetent/androidApp/src/main/AndroidManifest.xml:14:27-74
+27            </intent-filter>
+28        </activity>
+29        <activity
+29-->[androidx.compose.ui:ui-tooling:1.3.1] /home/harnick/.gradle/caches/transforms-3/292e1df3b96f40d8a8d89f2b57144f19/transformed/ui-tooling-1.3.1/AndroidManifest.xml:23:9-25:39
+30            android:name="androidx.compose.ui.tooling.PreviewActivity"
+30-->[androidx.compose.ui:ui-tooling:1.3.1] /home/harnick/.gradle/caches/transforms-3/292e1df3b96f40d8a8d89f2b57144f19/transformed/ui-tooling-1.3.1/AndroidManifest.xml:24:13-71
+31            android:exported="true" />
+31-->[androidx.compose.ui:ui-tooling:1.3.1] /home/harnick/.gradle/caches/transforms-3/292e1df3b96f40d8a8d89f2b57144f19/transformed/ui-tooling-1.3.1/AndroidManifest.xml:25:13-36
+32
+33        <provider
+33-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:25:9-33:20
+34            android:name="androidx.startup.InitializationProvider"
+34-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:26:13-67
+35            android:authorities="com.harnick.troupetent.androidx-startup"
+35-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:27:13-68
+36            android:exported="false" >
+36-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:28:13-37
+37            <meta-data
+37-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:30:13-32:52
+38                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+38-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:31:17-85
+39                android:value="androidx.startup" />
+39-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:32:17-49
+40        </provider>
+41
+42        <receiver
+42-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:35:9-47:20
+43            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+43-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:36:13-76
+44            android:directBootAware="false"
+44-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:37:13-44
+45            android:enabled="true"
+45-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:38:13-35
+46            android:exported="true"
+46-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:39:13-36
+47            android:permission="android.permission.DUMP" >
+47-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:40:13-57
+48            <intent-filter>
+48-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:41:13-43:29
+49                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+49-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:42:17-91
+49-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:42:25-88
+50            </intent-filter>
+51            <intent-filter>
+51-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:44:13-46:29
+52                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+52-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:45:17-85
+52-->[androidx.profileinstaller:profileinstaller:1.2.0] /home/harnick/.gradle/caches/transforms-3/d8b9d8d1d315a4b81a55df63790ac2c2/transformed/profileinstaller-1.2.0/AndroidManifest.xml:45:25-82
+53            </intent-filter>
+54        </receiver>
+55    </application>
+56
+57</manifest>
