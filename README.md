@@ -1,3 +1,5 @@
+⚠️ If you are a recruiter, or considering me for a development role, you can find a more complete example of my work under the [android-archive](https://github.com/har-nick/troupetent/tree/android-archive) fork.
+
 # Troupetent
 
 A Bandcamp client using Kotlin Multiplatform.
