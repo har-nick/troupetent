@@ -1,21 +1,103 @@
 [versions]
 kotlin = "1.8.10"
-kotlin-inject = "0.6.1"
-ksp = "1.8.10-1.0.9"
+compose-compiler = "1.4.4"
+compose-destinations = "1.8.37-beta"
+i18n4k = "0.5.0"
+sqldelight = "2.0.0-alpha05"
+
+lib-accompanist = "0.28.0"
+lib-android-lifecycles = "2.4.0"
+lib-kotlin-inject = "0.6.1"
+lib-ktor = "2.2.2"
 
 plugin-android-gradle = "7.4.2"
+plugin-ksp = "1.8.10-1.0.9"
 
 [libraries]
-tatarka-kotlin-inject = { module = "me.tatarka.inject:kotlin-inject-runtime", version.ref = "kotlin-inject" }
-tatarka-kotlin-inject-compiler = { module = "me.tatarka.inject:kotlin-inject-compiler-ksp", version.ref = "kotlin-inject" }
+accompanist-flow = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "lib-accompanist" }
+accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "lib-accompanist" }
+
+android-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lib-android-lifecycles" }
+android-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lib-android-lifecycles" }
+android-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lib-android-lifecycles" }
+android-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lib-android-lifecycles" }
+
+compose-destinations-core = { module = "io.github.raamcosta.compose-destinations:core", version.ref = "compose-destinations" }
+compose-destinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "compose-destinations" }
+
+compose-activity = { module = "androidx.activity:activity-compose", version = "1.7.0" }
+compose-material3 = { module = "androidx.compose.material3:material3", version = "1.1.0-beta01" }
+compose-material-icons = { module = "androidx.compose.material:material-icons-core", version = "1.4.0" }
+compose-material-extended = { module = "androidx.compose.material:material-icons-extended", version = "1.4.0" }
+compose-ui = { module = "androidx.compose.ui:ui", version = "1.4.0" }
+
+i18n4k-core = { module = "de.comahe.i18n4k:i18n4k-core", version.ref = "i18n4k" }
+i18n4k-jvm = { module = "de.comahe.i18n4k:i18n4k-core-jvm", version.ref = "i18n4k" }
+
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.6.4" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.4.1" }
+
+kotlin-inject = { module = "me.tatarka.inject:kotlin-inject-runtime", version.ref = "lib-kotlin-inject" }
+kotlin-inject-ksp = { module = "me.tatarka.inject:kotlin-inject-compiler-ksp", version.ref = "lib-kotlin-inject" }
+
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "lib-ktor" }
+ktor-engine-cio = { module = "io.ktor:ktor-client-cio", version.ref = "lib-ktor" }
+
+sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-driver-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+#sqldelight-driver-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-primitives = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 
 [bundles]
+common = [
+    "i18n4k-core",
+    "kotlin-inject",
+    "kotlin-inject-ksp",
+    "kotlinx-coroutines-core",
+    "kotlinx-serialization-json",
+    "ktor-core",
+    "sqldelight-coroutines",
+    "sqldelight-primitives"
+]
+
+androidshared = [
+    "i18n4k-jvm",
+    "ktor-engine-cio",
+    "sqldelight-coroutines",
+    "sqldelight-driver-android"
+]
+
+androidapp = [
+    "accompanist-flow",
+    "accompanist-webview",
+    "android-lifecycle-runtime-compose",
+    "android-lifecycle-livedata",
+    "android-lifecycle-runtime",
+    "android-lifecycle-viewmodel",
+    "compose-activity",
+    "compose-destinations-core",
+    "compose-destinations-ksp",
+    "compose-material3",
+    "compose-material-icons",
+    "compose-material-extended",
+    "compose-ui",
+    "kotlin-inject",
+    "kotlin-inject-ksp"
+]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "plugin-android-gradle" }
 android-library = { id = "com.android.library", version.ref = "plugin-android-gradle" }
 
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+complete-kotlin = { id = "com.louiscad.complete-kotlin", version = "1.1.0" }
+
+i18n4k = { id = "de.comahe.i18n4k", version.ref = "i18n4k" }
+
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+ksp = { id = "com.google.devtools.ksp", version.ref = "plugin-ksp" }
 
 jetbrains-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS user_data_table(
+    profile_picture_id INTEGER NOT NULL,
+    username TEXT NOT NULL PRIMARY KEY
+);
+
+getUserData: SELECT * FROM user_data_table;
+insertUserData: REPLACE INTO user_data_table(profile_picture_id, username) VALUES(?, ?);
+clearUserData: DELETE FROM user_data_table;

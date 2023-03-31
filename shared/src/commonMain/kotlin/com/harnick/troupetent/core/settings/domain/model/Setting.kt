@@ -1,6 +1,7 @@
 package com.harnick.troupetent.core.settings.domain.model
 
-abstract class Setting(
-    val description: String?,
+interface Setting<T> {
     val title: String
-)
+    val description: String
+    val value: T
+}
