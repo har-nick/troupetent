@@ -1,0 +1,15 @@
+import kotlin.Boolean;
+
+CREATE TABLE IF NOT EXISTS accountEntity(
+    token TEXT UNIQUE NOT NULL,
+    username TEXT UNIQUE PRIMARY KEY NOT NULL,
+    nickname TEXT,
+    avatarId INTEGER UNIQUE,
+    bannerId INTEGER UNIQUE,
+    isLastLoggedIn INTEGER AS Boolean NOT NULL
+);
+
+addAccount: REPLACE INTO accountEntity VALUES (?, ?, ?, ?, ?, 1);
+loadAllAccounts: SELECT * FROM accountEntity;
+deleteAccount: DELETE FROM accountEntity WHERE username = ?;
+deleteAllAccounts: DELETE FROM accountEntity;

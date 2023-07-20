@@ -3,6 +3,7 @@ pluginManagement {
         google()
         gradlePluginPortal()
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -14,5 +15,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Troupetent"
-include(":androidApp")
-include(":shared")
+includeBuild("../BandKit")
+include(":shared", ":androidApp")

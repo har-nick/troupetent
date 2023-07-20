@@ -1,60 +1,98 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
-    alias(libs.plugins.jetbrains.multiplatform)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.sqldelight)
-    alias(libs.plugins.i18n4k)
 }
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    targetHierarchy.default()
+
+    jvm {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
+        }
+    }
+
     android {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "17"
             }
         }
     }
 
+    @Suppress("UnusedPrivateProperty")
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.bundles.common)
+                implementation(libs.bundles.compose.multiplatform)
+                implementation(libs.bundles.ktor)
+                implementation(libs.bundles.voyager)
+
+                implementation(libs.bandkit)
+                implementation(libs.coroutines.core)
+                implementation(libs.koin.core)
+                implementation(libs.koin.compose)
+                implementation(libs.kotlinx.collections.immutable)
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.sqldelight.coroutines)
             }
         }
-        val commonTest by getting
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+
         val androidMain by getting {
             dependencies {
-                implementation(libs.bundles.androidshared)
+                implementation(libs.coroutines.android)
+                implementation(libs.koin.android)
+                implementation(libs.sqldelight.driver.android)
             }
         }
-        val androidUnitTest by getting
-    }
-}
 
-dependencies {
-    add("kspCommonMainMetadata", libs.kotlin.inject.ksp)
-    add("kspAndroid", libs.kotlin.inject.ksp)
-    add("kspAndroid", libs.compose.destinations.ksp)
-}
-
-sqldelight {
-
-    databases {
-        create("PersistentStorage") {
-            packageName.set("com.harnick.troupetent.database")
+        val jvmMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(libs.coroutines.jvm)
+                implementation(libs.coroutines.swing)
+                implementation(libs.sqldelight.driver.jvm)
+            }
         }
     }
-}
-
-i18n4k {
-    sourceCodeLocales = listOf("en_gb")
 }
 
 android {
-    namespace = "com.harnick.troupetent"
+    namespace = "uk.co.harnick.troupetent"
     compileSdk = 33
     defaultConfig {
-        minSdk = 23
+        minSdk = 21
+    }
+    packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1,DEPENDENCIES}"
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+compose {
+    kotlinCompilerPlugin.set("org.jetbrains.compose.compiler:compiler:1.4.8")
+    desktop.application.mainClass = "MainKt"
+}
+
+sqldelight {
+    databases {
+        create("LocalStorage") {
+            packageName.set("uk.co.harnick.troupetent")
+        }
     }
 }

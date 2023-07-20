@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:icon="@android:mipmap/sym_def_app_icon"
+        android:name=".core.di.KoinEntryPoint"
+        android:allowBackup="false"
         android:label="Troupetent"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:replace="android:label">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:exported="true">

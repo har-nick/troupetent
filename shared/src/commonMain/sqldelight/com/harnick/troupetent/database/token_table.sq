@@ -1,9 +1,0 @@
-CREATE TABLE IF NOT EXISTS token_table(
-    cipher BLOB NOT NULL,
-    iv BLOB NOT NULL,
-    owner TEXT NOT NULL PRIMARY KEY REFERENCES user_data_table(username) ON DELETE CASCADE
-);
-
-getToken: SELECT cipher, iv FROM token_table WHERE owner = ?;
-insertToken: REPLACE INTO token_table(owner, cipher, iv) VALUES (?, ?, ?);
-clearTokens: DELETE FROM token_table;

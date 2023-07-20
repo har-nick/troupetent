@@ -1,0 +1,20 @@
+import kotlin.collections.List;
+import uk.co.harnick.bandkit.domain.model.FavoriteTrack;
+import uk.co.harnick.bandkit.domain.model.ItemType;
+import uk.co.harnick.bandkit.domain.model.Track;
+
+CREATE TABLE IF NOT EXISTS libraryItemEntity(
+    owner TEXT NOT NULL,
+    id INTEGER UNIQUE NOT NULL,
+    title TEXT NOT NULL,
+    artist TEXT NOT NULL,
+    artId INTEGER NOT NULL,
+    type TEXT AS ItemType NOT NULL,
+    track_list TEXT AS List<Track> NOT NULL,
+    favorite_track TEXT AS FavoriteTrack
+);
+
+addItem: REPLACE INTO libraryItemEntity VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+loadItemsByOwner: SELECT * FROM libraryItemEntity WHERE owner = ?;
+deleteItemsByOwner: DELETE FROM libraryItemEntity WHERE owner = ?;
+deleteAllItems: DELETE FROM libraryItemEntity;

@@ -1,45 +1,34 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.android)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.versioning)
 }
 
 android {
-    namespace = "com.harnick.troupetent"
+    namespace = "uk.co.harnick.troupetent.android"
     compileSdk = 33
     defaultConfig {
-        applicationId = "com.harnick.troupetent"
-        minSdk = 26
+        applicationId = "uk.co.harnick.troupetent"
+        minSdk = 21
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+    buildFeatures.compose = true
+    composeOptions.kotlinCompilerExtensionVersion = "1.4.8"
+    packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1,DEPENDENCIES}"
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    kotlinOptions.jvmTarget = "17"
 }
 
 dependencies {
     implementation(project(":shared"))
-    implementation(libs.bundles.androidapp)
+    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation(libs.koin.android)
 }
