@@ -10,7 +10,7 @@ plugins {
 }
 
 i18n4k {
-    sourceCodeLocales = listOf("en", "de")
+    sourceCodeLocales = listOf("en_gb", "en_us", "fr", "de")
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
