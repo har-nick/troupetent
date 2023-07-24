@@ -13,7 +13,7 @@ android {
         targetSdk = 33
     }
     buildFeatures.compose = true
-    composeOptions.kotlinCompilerExtensionVersion = "1.4.8"
+    composeOptions.kotlinCompilerExtensionVersion = "1.5.0"
     packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1,DEPENDENCIES}"
     buildTypes {
         getByName("release") {
