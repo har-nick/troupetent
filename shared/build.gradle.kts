@@ -4,8 +4,13 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.i18n4k)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.sqldelight)
+}
+
+i18n4k {
+    sourceCodeLocales = listOf("en", "de")
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -20,7 +25,7 @@ kotlin {
         }
     }
 
-    android {
+    androidTarget {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "17"
@@ -38,6 +43,7 @@ kotlin {
 
                 implementation(libs.bandkit)
                 implementation(libs.coroutines.core)
+                implementation(libs.i18n4k)
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
                 implementation(libs.kotlinx.collections.immutable)
@@ -85,7 +91,7 @@ android {
 }
 
 compose {
-    kotlinCompilerPlugin.set("org.jetbrains.compose.compiler:compiler:1.4.8")
+    kotlinCompilerPlugin.set("org.jetbrains.compose.compiler:compiler:1.5.0")
     desktop.application.mainClass = "MainKt"
 }
 
