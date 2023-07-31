@@ -1,16 +1,14 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat.AppImage
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Exe
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.compose.multiplatform)
-    alias(libs.plugins.i18n4k)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.sqldelight)
-}
-
-i18n4k {
-    sourceCodeLocales = listOf("en_gb", "en_us", "fr", "de")
+//    alias(libs.plugins.moko.resources.generator)
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -39,17 +37,20 @@ kotlin {
             dependencies {
                 implementation(libs.bundles.compose.multiplatform)
                 implementation(libs.bundles.ktor)
+                implementation(libs.bundles.moko)
                 implementation(libs.bundles.voyager)
 
                 implementation(libs.bandkit)
                 implementation(libs.coroutines.core)
-                implementation(libs.i18n4k)
+                implementation(libs.kamel)
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
                 implementation(libs.kotlinx.collections.immutable)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.kotlinx.serialization.json)
+//                api(libs.moko.resources)
                 implementation(libs.sqldelight.coroutines)
+                implementation(libs.windowsize)
             }
         }
         val commonTest by getting {
@@ -80,10 +81,8 @@ kotlin {
 android {
     namespace = "uk.co.harnick.troupetent"
     compileSdk = 33
-    defaultConfig {
-        minSdk = 21
-    }
-    packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1,DEPENDENCIES}"
+    defaultConfig.minSdk = 21
+    packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1,DEPENDENCIES,MANIFEST,NOTICE,LICENSE}"
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -91,8 +90,13 @@ android {
 }
 
 compose {
-    kotlinCompilerPlugin.set("org.jetbrains.compose.compiler:compiler:1.5.0")
-    desktop.application.mainClass = "MainKt"
+    desktop.application {
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(AppImage, Exe)
+        }
+    }
 }
 
 sqldelight {
@@ -102,3 +106,8 @@ sqldelight {
         }
     }
 }
+
+//multiplatformResources {
+//    multiplatformResourcesPackage = "uk.co.harnick.troupetent.resources"
+//    multiplatformResourcesClassName = "MokoRes"
+//}

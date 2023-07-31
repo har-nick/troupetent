@@ -1,19 +1,22 @@
 [versions]
-agp = "8.0.2"
-compose-multiplatform = "1.4.1"
-coroutines = "1.7.2"
+agp = "8.1.0"
+compose-multiplatform = "1.4.3"
+coroutines = "1.7.3"
 i18n4k = "0.6.0"
 kotlin = "1.9.0"
 ktor = "2.3.2"
-sqldelight = "2.0.0-rc01"
+moko-resources = "0.23.0"
+sqldelight = "2.0.0"
 voyager = "1.0.0-rc06"
 
 [libraries]
 bandkit = { module = "uk.co.harnick:BandKit" }
 
+compose-animations = { module = "org.jetbrains.compose.animation:animation", version.ref = "compose-multiplatform" }
+compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose-multiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
-compose-material = { module = "org.jetbrains.compose.material:material", version.ref = "compose-multiplatform" }
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-multiplatform" }
+compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "compose-multiplatform" }
 compose-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose-multiplatform" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
 
@@ -22,7 +25,7 @@ coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", ve
 coroutines-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "coroutines" }
 coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
 
-i18n4k = { module = "de.comahe.i18n4k:i18n4k-core", version.ref = "i18n4k" }
+kamel = { module = "media.kamel:kamel-image", version = "0.7.1" }
 
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version = "0.3.5" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.4.0" }
@@ -37,13 +40,18 @@ ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation",
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
+moko-resources = { module = "dev.icerock.moko:resources", version.ref = "moko-resources" }
+moko-resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "moko-resources" }
+
 sqldelight-driver-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-driver-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 
-voyager-bottom-nav = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+windowsize = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version = "0.2.0" }
+
 voyager-nav = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
-voyager-transitions = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager-tab-nav = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
+voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -52,16 +60,25 @@ android-versioning = { id = "io.github.reactivecircus.app-versioning", version =
 
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 
-i18n4k = { id = "de.comahe.i18n4k", version.ref = "i18n4k" }
-
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
+moko-resources-generator = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko-resources" }
+
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 
 [bundles]
-compose-multiplatform = ["compose-foundation", "compose-material", "compose-material3", "compose-resources", "compose-runtime"]
+compose-multiplatform = [
+    "compose-animations",
+    "compose-components-resources",
+    "compose-foundation",
+    "compose-material3",
+    "compose-material-icons-extended",
+    "compose-resources",
+    "compose-runtime"
+]
 ktor = ["ktor-cio", "ktor-content-negotiation", "ktor-core", "ktor-serialization-json"]
-voyager = ["voyager-bottom-nav", "voyager-nav", "voyager-transitions"]
+moko = ["moko-resources", "moko-resources-compose"]
+voyager = ["voyager-nav", "voyager-tab-nav", "voyager-transitions"]
